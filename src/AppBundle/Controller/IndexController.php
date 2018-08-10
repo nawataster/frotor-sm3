@@ -4,14 +4,21 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Psr\Log\LoggerInterface;
 
 class IndexController extends Controller{
 
+	private $lg;
+
+	public function __construct( LoggerInterface $logger ){
+		$this->lg	= $logger;
+	}
+//______________________________________________________________________________
 
 	public function indexAction( Request $request, $num ) {
 
 // 	    return $app['twig']->render('index.twig', []);
-
+$this->lg->info("Test message in FROTOR app.", ['dir'=>__FILE__]);
 
 		$number = $num;
 
