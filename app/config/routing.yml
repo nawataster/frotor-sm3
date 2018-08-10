@@ -1,3 +1,10 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+#app:
+#    resource: '@AppBundle/Controller/'
+#    type: annotation
+
+# the "app_index" route name is not important yet
+app_index:
+   path: /{num}
+   defaults: { _controller: AppBundle:Index:index, num: 1 }
+   requirements:
+        num: '\d+'
