@@ -17,9 +17,6 @@ class IndexController extends Controller{
 
 	public function indexAction( Request $request, $num ) {
 
-// 	    return $app['twig']->render('index.twig', []);
-$this->lg->info("Test message in FROTOR app.", ['dir'=>__FILE__]);
-
 		$number = $num;
 
         return new Response(
