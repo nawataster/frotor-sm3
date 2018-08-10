@@ -1,3 +1,8 @@
+Description
+========================
+This project is created mainly for Symfony 3.4 R&D.
+This project contains all features of frotor-l5 project and several else.
+
 Symfony Standard Edition
 ========================
 
