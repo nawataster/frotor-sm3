@@ -36,3 +36,7 @@ services:
 
     Monolog\Formatter\LineFormatter:
         arguments: ["\n%%channel%%.%%level_name%% *** [%%datetime%%] *** %%context.dir%%\n%%message%\n", "d-m-Y H:i:s.v", true, true]
+        
+    AppBundle\Service\FaucetService:
+        public: true
+        arguments: []
