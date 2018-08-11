@@ -35,8 +35,12 @@ services:
     #         $someArgument: 'some_value'
 
     Monolog\Formatter\LineFormatter:
-        arguments: ["\n%%channel%%.%%level_name%% *** [%%datetime%%] *** %%context.dir%%\n%%message%\n", "d-m-Y H:i:s.v", true, true]
+#        arguments: ["\n%%channel%%.%%level_name%% *** [%%datetime%%] *** %%context.dir%%\n%%message%\n", "d-m-Y H:i:s.v", true, true]   #This line was left as an example of alternative arguments definitions
+        arguments:
+            $format: "\n%%channel%%.%%level_name%% *** [%%datetime%%] *** %%context.dir%%\n%%message%\n"
+            $dateFormat: "d-m-Y H:i:s.v"
+            $allowInlineLineBreaks: true
+            $ignoreEmptyContextAndExtra: true
         
     AppBundle\Service\FaucetService:
         public: true
-        arguments: []
