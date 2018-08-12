@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class FaucetService{
 
-
 	private $em;
 
 	public function __construct( EntityManagerInterface $em ){
@@ -26,7 +25,6 @@ class FaucetService{
 		;
 
 		return $qb;
-
 	}
 //______________________________________________________________________________
 
@@ -42,6 +40,13 @@ class FaucetService{
 		$query	= $qb->getQuery();
 		$res	= $query->getResult();
 		return $res[0];
+	}
+//______________________________________________________________________________
+
+	public function faucetCount(){
+		return [
+			'n_act' => count($this->getActiveFaucetsObj()->getQuery()->getResult()),
+			'n_all' => count($this->em->getRepository('AppBundle\Entity\Faucet')->findAll())];
 	}
 //______________________________________________________________________________
 

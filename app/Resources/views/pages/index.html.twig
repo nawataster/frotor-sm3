@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{#
 
 {% block body %}
 <h3>Inex page</h3>
@@ -9,4 +10,97 @@
 {% block stylesheets %}
 <style>
 </style>
+{% endblock %}
+#}
+
+
+
+
+
+
+{% block body %}
+
+{#
+{!! Form::open(['url'=>'/faucetation','method'=>'post', 'role'=>'form','id'=>'faucetForm','name'=>'faucetForm']) !!}
+{!! Form::close() !!}
+#}
+
+<div class="panel panel-info main-panel-content">
+	
+	<div class="panel-heading index-heard {{ faucet.isDebt ? 'debt' : '' }}">
+<table class="main-tbl">
+	<tr>
+{% if faucet.id %}
+		<td class="faucet-id-td">
+			Id: <div class="badge" id="faucet_id">{{ faucet.id }}</div>
+			<div class="btn-group btn-group-xs" role="group" aria-label="Faucet id">
+				<button type="button" id="new_tab_btn" class="btn btn-default glyphicon glyphicon-new-window" title="New window"></button>
+				<button type="button" id="debt_btn" class="btn btn-default glyphicon glyphicon-warning-sign" title="Set debt"></button>
+			</div>
+		</td>
+
+		<td class="faucet-info-td"><div id="info" class="descr-txt">{{ faucet.info }}</div></td>
+
+		<td class="last-payout-txt">Last payout on <span id="last_pay">{{ last_pay }}</span></td>
+
+		<td id="priority_td" class="priority-td">
+			<div class="input-group">
+				<span class="input-group-addon">Priority&nbsp;</span>
+
+				<input type="text" name="priority" id="priority" class="form-control" value="{{ faucet.priority }}" />
+				<input type="hidden" id="order" value="{{ order }}" />
+				
+				<span class="input-group-btn">
+		        	<button type="button" id="change_order_btn" class="btn btn-default glyphicon glyphicon-arrow-{{ order=='asc'?'up':'down' }} order-btn" title="Set order {{ order!='asc'?'ascended':'descended' }}"></button>
+				</span>
+			</div>
+		</td>
+
+		<td id="act_after_td" class="duration-td">
+			<div class="input-group">
+				<span class="input-group-addon">Minutes to wait&nbsp;</span>
+				
+				<input type="text" name="cduration" id="cduration" class="form-control" value="{{ faucet.duration }}" />
+				
+				<span class="input-group-btn">
+		        	<button type="button" id="save_duration_btn" class="btn btn-default glyphicon glyphicon-floppy-disk save-btn" title="Save"></button>
+				</span>
+			</div>
+			<input type="hidden" name="oduration" id="oduration" value="{{ faucet.duration }}" />
+		</td>
+{% else %}
+		<td class="no-active-td">&#8212; NO ACTIVE FAUCETS &#8212;</td>
+{% endif %}
+
+		<td class="num-info-td">
+			<table cellspacing="0" cellpadding="0" border="0" class="faucets-info-tbl">
+				<tr><td rowspan="2" class="faucet-prompt-td">Faucets</td><td>all</td><td class="faucet-count-td" id="n_all">{{ count.n_all }}</td></tr>
+				<tr><td>active</td><td id="n_act" class="faucet-count-td">{{ count.n_act }}</td></tr>
+			</table>
+		</td>
+
+		<td class='tool-btn-td'>
+			<div class="btn-group btn-group-sm {!! $btn_grp_css !!} pull-right" role="group" aria-label="Faucet manipulate">
+				<button type="button" id="settings_btn" class="btn btn-default glyphicon glyphicon-wrench" title="Settings"></button>
+{% if faucet.id %}
+				<button type="button" id="tomorrow_btn" class="btn btn-default glyphicon glyphicon-time" title="Tomorrow"></button>
+				<button type="button" id="load_btn" class="btn btn-default glyphicon glyphicon-play" title="Show current faucet"></button>
+{% endif %}
+				<button type="button" id="next_btn" class="btn btn-default glyphicon glyphicon-forward" title="Next faucet"></button>
+			</div>
+		</td>
+	</tr>
+</table>
+
+	</div>
+
+{#
+
+	<div class="panel-body ifraim-panel">
+	   <iframe id="main_fraim" class="main-fraim" src="{{ path('showdummy') }}"></iframe>
+	</div>
+#}
+	
+	
+</div>
 {% endblock %}

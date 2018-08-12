@@ -15,11 +15,13 @@ class IndexController extends Controller{
 
 		$faucet	= $fsrv->getFirstReadyFaucet();
 
-
-$this->container->get('logger')->info( $faucet->getId()." / ".$faucet->getInfo(), ['dir'=>__FILE__]);
+		$count	= $fsrv->faucetCount();
 
 		return $this->render('pages/index.html.twig', [
-			'faucet'	=> $faucet
+			'faucet'	=> $faucet,
+			'last_pay'	=> '11-11-2011',
+	    	'order'		=> 'desc',
+	    	'count'		=> $count
         ]);
 	}
 //______________________________________________________________________________

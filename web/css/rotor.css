@@ -1,0 +1,237 @@
+@CHARSET "UTF-8";
+
+html, body{
+	height: 99.82%;
+	background-color: #f1e4dc;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+div.ui-dialog span.error-ico{
+	float:left; 
+	margin:0 15px 0 0;
+	font-size:20px;
+}
+
+.ui-widget-overlay{
+	background: none;
+	opacity: 0.7;
+	background-color: #799786;
+}
+
+.main-frotor-title{
+	font-size: 150px;
+	text-align: center;
+	background-color: #629d9a;
+	font-family: Impact, Charcoal, sans-serif;
+	font-weight: bold;
+	letter-spacing: 60px;
+	color: #804000;
+	margin-bottom: 100px;
+}
+
+.dialog-standard .ui-dialog-titlebar-close{
+  display: none;
+}
+.main-panel-content{
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+}
+
+div.index-heard{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	color: #000;
+}
+
+div.index-heard *{
+	color: #000;
+}
+
+.main-fraim{
+	width: 100%;
+	height: 100%; 
+	border: none"
+}
+.ifraim-panel{
+	padding: 0;
+	height: 95.5%;
+}
+
+.main-tbl{
+	width: 100%;
+}
+
+.main-tbl .badge, .main-tbl .faucet-id-td{
+	font-size: 18px;
+	color: #fff;
+}
+
+.panel-heading.debt{
+	background-color: #ff7171;
+}
+
+.main-tbl .faucet-id-td{
+	color: #000;
+	font-weight: bold;
+	white-space: nowrap;
+		width: 75px;
+}
+.descr-txt{
+	font-size: 14px;
+	line-height: 29px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis; 
+	height: 30px;
+	vertical-align: middle;
+	padding: 0 5px 0 30px
+}
+
+td.last-payout-txt, td.last-payout-txt *{
+	font-size: 12px;
+	vertical-align: middle;
+	padding: 0 5px 0 10px;
+	color: #bd424f;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+td.last-payout-txt{
+	width: 180px;
+}
+
+.duration-td, .priority-td{
+	white-space: nowrap;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+.duration-td{
+	width: 280px;
+}
+.priority-td{
+	width: 220px;
+}
+table.main-tbl input{
+	text-align: right;
+	font-size: 18px;
+	height: 29px;
+}
+
+table.main-tbl .glyphicon{
+ 	top: 0;  
+	background-color: #dedeed;
+}
+table.main-tbl .glyphicon:HOVER{
+	background-color: #a8a8d0;
+}
+td.duration-td .save-btn, td.priority-td .order-btn{
+	padding: 6px 2px;
+	background-color: #eee;
+	height: 29px;
+}
+
+table.main-tbl td.faucet-id-td div.btn-group.btn-group-xs button#new_tab_btn,
+table.main-tbl td.faucet-id-td div.btn-group.btn-group-xs button#debt_btn
+{
+	top: 1px;
+	border-color: #5f82b6;
+}
+table.main-tbl td.faucet-id-td div.btn-group.btn-group-xs button#new_tab_btn{
+	background-color: #92bbe4;
+}
+table.main-tbl td.faucet-id-td div.btn-group.btn-group-xs button#debt_btn{
+	background-color: #d2cb68;
+}
+table.main-tbl td.faucet-id-td div.btn-group.btn-group-xs button#debt_btn:HOVER{
+	background-color: #b1a834;
+}
+table.main-tbl td.faucet-id-td div.btn-group.btn-group-xs button#new_tab_btn:HOVER{
+	background-color: #5f9bd8;
+}
+
+table.main-tbl td.faucet-id-td .btn-group.btn-group-xs{
+	bottom: 3px;
+}
+
+table.main-tbl td.no-active-td{
+	width: 1455px;	
+	font-size: 22px;
+	font-weight: bold;
+	letter-spacing: 5px;
+	color: #e60073;
+	text-align: center;
+}
+
+.num-info-td{
+	padding-left: 10px;
+	padding-right: 70px;
+	white-space: nowrap;
+	width: 215px;
+}
+
+.last-payment{
+	font-family: arial;
+	padding-left: 140px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #e60073;
+	white-space: nowrap;
+}
+.tool-btn-td{
+	width: 160px;
+	white-space: nowrap;
+}
+
+table.faucets-info-tbl td{
+	font-size: 11px;
+	padding: 0 5px;
+	color: #7c6505;
+}
+table.faucets-info-tbl td.faucet-prompt-td{
+	font-size: 14px;
+	font-weight: bold;
+}
+table.faucets-info-tbl .faucet-count-td{
+	text-align: right;
+	font-weight: bold;
+}
+
+
+table.main-tbl td.tool-btn-td div.btn4{
+	width: 135px;
+}
+
+table.main-tbl td.tool-btn-td .btn2{
+		width: 80px;
+}
+
+
+div.dasboard-frotor label.control-label{
+	white-space: nowrap;
+}
+.id-dasboard-frotor-div{
+	margin-top: 6px;
+	font-size: 18px;
+}
+.id-dasboard-frotor-label{
+	font-size: 18px;
+}
+div.tools-btn .glyphicon{
+	font-size: 20px;
+}
+
+
+ul.time-units{
+	min-width: 68px;
+}
+ul.time-units li{
+	padding: 0 0 0 5px;
+	cursor: pointer;
+}
+ul.time-units li:HOVER {
+	background-color: #ebebeb;
+}

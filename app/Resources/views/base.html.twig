@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Frotor-SM3{% endblock %}</title>
+        <title>{% block title %}Frotor-SM33{% endblock %}</title>
         
 	<meta content="text/html; charset=utf-8" http-equiv="content-type">
 	<meta name="keywords" content="bitcoin,btc,rotator,faucest">
@@ -10,6 +10,13 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+{#
+	 <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+#}
+
+	<link rel="icon" type="image/png" href="{{ asset('images/bitcoin.png') }}" />
 
 	<!-- jQuery -->
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript" charset="utf-8"></script>
@@ -29,16 +36,19 @@
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	
+	
+	
+	<link rel="stylesheet" href="{{ asset('css/rotor.css') }}">
+	<script type="text/javascript" src="{{ asset('js/rotor.js') }}"></script>
+	
 <!-- 
-	<link rel="stylesheet" href="/css/rotor.css">
 	<link href="/image/bitcoin.png" type="image/png" rel="icon">
-
+	<link rel="stylesheet" href="/css/rotor.css">
 	<script type="text/javascript" src="/js/rotor.js"></script>
-        
  -->
         
         {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+       
     </head>
     <body>
         {% block body %}{% endblock %}
