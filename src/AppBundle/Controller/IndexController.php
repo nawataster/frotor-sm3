@@ -26,4 +26,10 @@ class IndexController extends Controller{
 	}
 //______________________________________________________________________________
 
+	public function dummyAction( Request $request ) {
+
+		return $this->render('pages/dummy.html.twig', []);
+	}
+//______________________________________________________________________________
+
 }//class end
