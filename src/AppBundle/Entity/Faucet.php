@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Fuacet
+ * Faucet
  *
- * @ORM\Table(name="fuacet")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\FuacetRepository")
+ * @ORM\Table(name="faucets")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FaucetRepository")
  */
-class Fuacet
+class Faucet
 {
     /**
      * @var int
@@ -100,7 +100,7 @@ class Fuacet
      *
      * @param string $url
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setUrl($url)
     {
@@ -124,7 +124,7 @@ class Fuacet
      *
      * @param string $query
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setQuery($query)
     {
@@ -148,7 +148,7 @@ class Fuacet
      *
      * @param string $info
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setInfo($info)
     {
@@ -172,7 +172,7 @@ class Fuacet
      *
      * @param integer $duration
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setDuration($duration)
     {
@@ -196,7 +196,7 @@ class Fuacet
      *
      * @param \DateTime $until
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setUntil($until)
     {
@@ -220,7 +220,7 @@ class Fuacet
      *
      * @param \DateTime $updated
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setUpdated($updated)
     {
@@ -244,7 +244,7 @@ class Fuacet
      *
      * @param integer $priority
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setPriority($priority)
     {
@@ -268,7 +268,7 @@ class Fuacet
      *
      * @param \DateTime $banUntil
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setBanUntil($banUntil)
     {
@@ -292,7 +292,7 @@ class Fuacet
      *
      * @param boolean $isDebt
      *
-     * @return Fuacet
+     * @return Faucet
      */
     public function setIsDebt($isDebt)
     {
