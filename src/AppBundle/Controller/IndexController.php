@@ -3,41 +3,39 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Psr\Log\LoggerInterface;
+use AppBundle\Service\FaucetService;
+use DateTime;
+// use Symfony\Component\HttpFoundation\Response;
+// use Psr\Log\LoggerInterface;
 
 class IndexController extends Controller{
 
-	private $lg;
-
-	public function __construct( LoggerInterface $logger ){
-		$this->lg	= $logger;
+	private static function getLastPayInfo( $faucet ){
+		$updated_mk	= strtotime($faucet->getUpdated()->format('Y-m-d H:i:s'));
+		$dt_now		= new DateTime(date('Y-m-d'));
+		$dt_payed	= new DateTime(date( 'Y-m-d', $updated_mk ));
+		return date( 'd-m-Y', $updated_mk ).' ('.$dt_now->diff( $dt_payed )->days.')';
 	}
 //______________________________________________________________________________
 
-	public function indexAction( Request $request, $num ) {
+	public function indexAction( Request $request ) {
+		$fsrv	= $this->container->get(FaucetService::class);
+		$faucet	= $fsrv->getFirstReadyFaucet();
+		$count	= $fsrv->faucetCount();
 
-		$number = $num;
+		return $this->render('pages/index.html.twig', [
+			'faucet'	=> $faucet,
+			'last_pay'	=> self::getLastPayInfo( $faucet ),
+	    	'order'		=> 'desc',
+	    	'count'		=> $count
+        ]);
+	}
+//______________________________________________________________________________
 
-        return new Response(
-            '<html><body>Lucky number: '.$number.'</body></html>'
-        );
+	public function dummyAction( Request $request ) {
 
+		return $this->render('pages/dummy.html.twig', []);
 	}
 //______________________________________________________________________________
 
 }//class end
-
-//Commit before amend.
-
-
-// 	$faucet = new \App\Model\Faucet();
-//     $faucet->setUrl(rand(1, 11000).'-test/url/tst.tst');
-//     $faucet->setQuery(rand(1, 11000).'-test/query/tst.qqq');
-//     $faucet->setInfo(rand(1, 11000).'-test/INFO/tst.inf');
-// //     $faucet->setDuration(10);
-//     $faucet->setUntil( new \DateTime('2018-10-01 00:00:01') );
-
-//     $entityManager = $app['orm.em'];
-//     $entityManager->persist( $faucet );
-//     $entityManager->flush();
