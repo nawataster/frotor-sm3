@@ -15,10 +15,11 @@ class IndexController extends Controller{
 
 		$faucet	= $fsrv->getFirstReadyFaucet();
 
-// UtLogger_Suite::_log($faucet->getId()." / ".$faucet->getInfo() );
-// $this->container->get('logger')->info( $faucet->getId()." / ".$faucet->getInfo(), ['dir'=>__FILE__]);
+
+$this->container->get('logger')->info( $faucet->getId()." / ".$faucet->getInfo(), ['dir'=>__FILE__]);
 
 		return $this->render('pages/index.html.twig', [
+			'faucet'	=> $faucet
         ]);
 	}
 //______________________________________________________________________________
