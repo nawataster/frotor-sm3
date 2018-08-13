@@ -1,6 +1,10 @@
 showindex:
-    path: /{num}
-    defaults: { _controller: AppBundle:Index:index, num: 1 }
+    path: /
+    defaults: { _controller: AppBundle:Index:index }
+        
+showdashboard:
+    path: /set/{id}
+    defaults: { _controller: AppBundle:Index:dashboard, id: 0 }
     requirements:
         num: '\d+'
         

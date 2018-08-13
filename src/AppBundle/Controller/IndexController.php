@@ -38,4 +38,10 @@ class IndexController extends Controller{
 	}
 //______________________________________________________________________________
 
+	public function dashboardAction( Request $request, $id ){
+
+		return $this->render('pages/dashboard.html.twig', []);
+	}
+//______________________________________________________________________________
+
 }//class end
