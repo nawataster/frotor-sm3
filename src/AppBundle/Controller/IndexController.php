@@ -7,6 +7,8 @@ use AppBundle\Service\FaucetService;
 use DateTime;
 // use Symfony\Component\HttpFoundation\Response;
 // use Psr\Log\LoggerInterface;
+use AppBundle\Entity\Faucet;
+use AppBundle\Form\FaucetForm;
 
 class IndexController extends Controller{
 
@@ -22,6 +24,7 @@ class IndexController extends Controller{
 		$fsrv	= $this->container->get(FaucetService::class);
 		$faucet	= $fsrv->getFirstReadyFaucet();
 		$count	= $fsrv->faucetCount();
+
 
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
@@ -40,7 +43,16 @@ class IndexController extends Controller{
 
 	public function dashboardAction( Request $request, $id ){
 
-		return $this->render('pages/dashboard.html.twig', []);
+		$faucet = $this->getDoctrine()
+			->getRepository(Faucet::class)
+			->find( $id );
+
+		$form = $this->createForm( FaucetForm::class, $faucet );
+
+		return $this->render('pages/dashboard.html.twig', [
+			'form'		=> $form->createView(),
+			'faucet'	=> $faucet
+		]);
 	}
 //______________________________________________________________________________
 
