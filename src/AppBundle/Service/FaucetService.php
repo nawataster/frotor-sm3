@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Service;
 
-use AppBundle\Entity\Faucet;
 use Doctrine\ORM\EntityManagerInterface;
 
 class FaucetService{
