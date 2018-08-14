@@ -47,10 +47,6 @@ class IndexController extends Controller{
 			? $this->getDoctrine()->getRepository(Faucet::class)->find( $id )
 			: $fsrv->getNullFoucet();
 
-
-
-// 		$faucet = $this->getDoctrine()->getRepository(Faucet::class)->find( $id );
-
 		$faucet	= $fsrv->prepareFaucet( $faucet );
 
 		$form	= $this->createForm( FaucetForm::class, $faucet );

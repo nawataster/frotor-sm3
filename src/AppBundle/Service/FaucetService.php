@@ -91,7 +91,9 @@ class FaucetService{
 
 		$form_data	= self::prepareUrl( $form_data );
 
-		$faucet = $this->em->getRepository(Faucet::class)->find( $id );
+		$faucet = (bool)$id
+			? $this->em->getRepository(Faucet::class)->find( $id )
+			: $this->getNullFoucet();
 
 		$faucet->setUrl( $form_data->getUrl() );
 		$faucet->setQuery( $form_data->getQuery() );
@@ -99,6 +101,7 @@ class FaucetService{
 		$faucet->setPriority( $form_data->getPriority() );
 		$faucet->setDuration( $form_data->getDuration() * 60 );
 
+		!(bool)$id ? $this->em->persist($faucet):null;
 		$this->em->flush();
 	}
 //______________________________________________________________________________
@@ -110,9 +113,11 @@ class FaucetService{
 			$faucet->setDuration( 1800 );
 
 			$faucet->setUpdated( new DateTime(date('Y-m-d H:i:s')) );
+			$faucet->setUntil( new DateTime(date('Y-m-d H:i:s')) );
 			$faucet->setBanUntil( new DateTime(date('Y-m-d H:i:s', strtotime( '-1 day' ))) );
 
 			$faucet->setPriority( 1 );
+			$faucet->setIsDebt( false );
 
 			return $faucet;
 

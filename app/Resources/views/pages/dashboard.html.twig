@@ -13,7 +13,7 @@
 
 				<label for="faucet_id" class="col-sm-4 control-label id-dasboard-frotor-label">Id </label>
 				<div class="col-sm-5">
-					<div id="faucet_id" class="badge id-dasboard-frotor-div">{{ faucet.id??'New faucet' }}</div>
+					<div id="faucet_id" class="badge id-dasboard-frotor-div">{{ faucet.id??'New' }}</div>
 				</div>
 				<div class="col-sm-3 tools-btn">
 					<div class="btn-group btn-group-xs pull-right" role="group">
@@ -103,7 +103,7 @@
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
-#}
+
 
 
 {{ form_end(form) }}
@@ -116,19 +116,15 @@
 $(document).ready(function(){
 
 	faucet_id = {{ faucet.id ?? 0 }};
-/* 
-	$("#btn_add").click(function(event){
+
+	$("#faucet_form_btn_add").click(function(event){
 		faucet_id = 0;
-
-		$("#url").val("");
-		$("#info").val("");
-		$("#duration").val(60);
-		$("#priority").val(1);
-		$("#faucet_id").html("New faucet");
-
-		$("#url").focus();
+		window.location.href = '{{ path('showdashboard') }}';
 	});
-
+	
+	
+	
+/*
 	$('#dashboardForm').submit(function(event){
 		event.preventDefault();
 		postDashboardData($(this).attr('action'));
