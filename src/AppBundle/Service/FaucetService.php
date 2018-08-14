@@ -4,13 +4,16 @@ namespace AppBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Entity\Faucet;
 use DateTime;
+use Psr\Log\LoggerInterface;
 
 class FaucetService{
 
 	private $em;
+	private $lg;
 
-	public function __construct( EntityManagerInterface $em ){
+	public function __construct( EntityManagerInterface $em, LoggerInterface $logger ){
 		$this->em	= $em;
+		$this->lg	= $logger;
 	}
 //______________________________________________________________________________
 
@@ -52,37 +55,24 @@ class FaucetService{
 //______________________________________________________________________________
 
 	private static function applyTimeUnit( $faucet ){
-    	$faucet->duration = $faucet->duration / 60;
+    	$duration = $faucet->getDuration() / 60;
+    	$faucet->setDuration($duration);
     	return $faucet;
 	}
 //______________________________________________________________________________
 
-	public function find( $id ){
+	public function getFaucet( $id ){
+		$faucet = $this->em->getRepository(Faucet::class)->find( $id );
 
-// 		$faucet = $this->em
-// 			->getRepository(Faucet::class)
-// 			->find( $id );
+		$url	= $faucet->getUrl().($faucet->getQuery() != '' ? '?'.$faucet->getQuery() : '');
+		$faucet->setUrl( $url );
 
-// 		$faucet->url= $faucet->url.($faucet->query != '' ? '?'.$faucet->query : '');
+		$dt_now			= new DateTime(date('Y-m-d'));
+		$dt_ban 		= $faucet->getBanUntil();
+		$diff			= $dt_now->diff( $dt_ban, FALSE );
+		$faucet->bandays= $diff->invert ? 0 : $diff->d;
 
-
-
-// 		$dt_now = new DateTime( date('Y-m-d') );
-// 		$dt_ban = new DateTime( date('Y-m-d', strtotime($faucet->getBanUntil)) );
-// 		$diff	= $dt_now->diff( $dt_ban, FALSE );
-// 		$faucet->bandays	= $diff->invert ? 0 : $diff->d;
-
-
-
-// 		$updated_mk	= strtotime($faucet->getUpdated()->format('Y-m-d H:i:s'));
-// 		$dt_now		= new DateTime(date('Y-m-d'));
-// 		$dt_payed	= new DateTime(date( 'Y-m-d', $updated_mk ));
-// 		return date( 'd-m-Y', $updated_mk ).' ('.$dt_now->diff( $dt_payed )->days.')';
-
-
-
-// 		return self::applyTimeUnit( $faucet );
-
+		return self::applyTimeUnit( $faucet );;
 	}
 //______________________________________________________________________________
 }

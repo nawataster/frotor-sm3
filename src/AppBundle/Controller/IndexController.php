@@ -40,15 +40,10 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function dashboardAction( Request $request, $id ){
+		$fsrv	= $this->container->get(FaucetService::class);
+		$faucet	= $fsrv->getFaucet( $id );
 
-		$faucet = $this->getDoctrine()
-			->getRepository(Faucet::class)
-			->find( $id );
-
-// 		$fsrv	= $this->container->get(FaucetService::class);
-// 		$faucet	= $fsrv->find( $id );
-
-		$form = $this->createForm( FaucetForm::class, $faucet );
+		$form	= $this->createForm( FaucetForm::class, $faucet );
 
 		return $this->render('pages/dashboard.html.twig', [
 			'form'		=> $form->createView(),
