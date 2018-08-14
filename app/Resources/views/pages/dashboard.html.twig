@@ -13,7 +13,7 @@
 
 				<label for="faucet_id" class="col-sm-4 control-label id-dasboard-frotor-label">Id </label>
 				<div class="col-sm-5">
-					<div id="faucet_id" class="badge id-dasboard-frotor-div">{{ faucet.id ? faucet.id : 'New faucet' }}</div>
+					<div id="faucet_id" class="badge id-dasboard-frotor-div">{{ faucet.id??'New faucet' }}</div>
 				</div>
 				<div class="col-sm-3 tools-btn">
 					<div class="btn-group btn-group-xs pull-right" role="group">
@@ -90,7 +90,7 @@
 		<div class="col-sm-4"></div>
     </div>
     
-{# Button Submit #}
+
 	<div class="row">
 		<div class="col-sm-8">
 			<div class="form-group">
@@ -103,10 +103,53 @@
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
-    
+#}
+
+
 {{ form_end(form) }}
 </div>
 
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+
+	faucet_id = {{ faucet.id ?? 0 }};
+/* 
+	$("#btn_add").click(function(event){
+		faucet_id = 0;
+
+		$("#url").val("");
+		$("#info").val("");
+		$("#duration").val(60);
+		$("#priority").val(1);
+		$("#faucet_id").html("New faucet");
+
+		$("#url").focus();
+	});
+
+	$('#dashboardForm').submit(function(event){
+		event.preventDefault();
+		postDashboardData($(this).attr('action'));
+		return false;
+	});
+
+	$("#btn_del").click(function(event){
+		affirm( "Confirmation required", "Are you sure you want to delete this faucet?", function(){
+			faucet_id = -faucet_id;
+			$('#dashboardForm').submit();
+		});
+	});
+
+	$("#btn_reset").click(function(event){
+		$("#dashboardForm").attr("action","{!! url('/') !!}/resetall");
+		$('#dashboardForm').submit();
+	});
+
+/*   */
+
+
+});
+</script>
+{% endblock %}

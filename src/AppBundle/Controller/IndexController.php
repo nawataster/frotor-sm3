@@ -40,9 +40,17 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function dashboardAction( Request $request, $id ){
-
-		$faucet = $this->getDoctrine()->getRepository(Faucet::class)->find( $id );
 		$fsrv	= $this->container->get(FaucetService::class);
+
+
+		$faucet	= (bool)$id
+			? $this->getDoctrine()->getRepository(Faucet::class)->find( $id )
+			: $fsrv->getNullFoucet();
+
+
+
+// 		$faucet = $this->getDoctrine()->getRepository(Faucet::class)->find( $id );
+
 		$faucet	= $fsrv->prepareFaucet( $faucet );
 
 		$form	= $this->createForm( FaucetForm::class, $faucet );

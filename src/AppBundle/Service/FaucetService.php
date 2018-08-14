@@ -103,4 +103,20 @@ class FaucetService{
 	}
 //______________________________________________________________________________
 
+	public function getNullFoucet(){
+			$faucet	= new Faucet();
+
+			$faucet->setUrl('');
+			$faucet->setDuration( 1800 );
+
+			$faucet->setUpdated( new DateTime(date('Y-m-d H:i:s')) );
+			$faucet->setBanUntil( new DateTime(date('Y-m-d H:i:s', strtotime( '-1 day' ))) );
+
+			$faucet->setPriority( 1 );
+
+			return $faucet;
+
+	}
+//______________________________________________________________________________
+
 }// Class end
