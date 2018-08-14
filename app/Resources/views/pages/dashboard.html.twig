@@ -128,7 +128,7 @@ $(document).ready(function(){
 
 	$("#faucet_form_btn_del").click(function(event){
 		affirm( "Confirmation required", "Are you sure you want to delete this faucet?", function(){
-			window.location.href = '{{ path('deletefaucet', {id: faucet_id}) }}';{# faucet.id can not be set in controller.#}
+			window.location.href = '{{ path('deletefaucet', {id: faucet_id}) }}';
 		});
 	});
 	

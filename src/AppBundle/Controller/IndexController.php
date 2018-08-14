@@ -47,16 +47,15 @@ class IndexController extends Controller{
 
 		$fsrv	= $this->container->get(FaucetService::class);
 
-
 		$faucet	= (bool)$id
 			? $this->getDoctrine()->getRepository(Faucet::class)->find( $id )
-			: $fsrv->getNullFoucet();
+			: $fsrv->getNullFaucet();
 
 		$faucet	= $fsrv->prepareFaucet( $faucet );
 
 		$form	= $this->createForm( FaucetForm::class, $faucet );
-
 		$form->handleRequest($request);
+
 		if( $form->isSubmitted() && $form->isValid() ){
 			$form_data = $form->getData();
 			$fsrv->saveFaucet( $faucet->getId(), $form_data );
@@ -73,9 +72,7 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function deleteAction( Request $request, $id ){
-
-$this->container->get('logger')->info( "id: $id", ['dir'=>__FILE__]);
-
+		$this->container->get(FaucetService::class)->removeFaucet( $id );
 		return $this->redirectToRoute('showindex');
 	}
 //______________________________________________________________________________

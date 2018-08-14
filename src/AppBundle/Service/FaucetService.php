@@ -93,7 +93,7 @@ class FaucetService{
 
 		$faucet = (bool)$id
 			? $this->em->getRepository(Faucet::class)->find( $id )
-			: $this->getNullFoucet();
+			: $this->getNullFaucet();
 
 		$faucet->setUrl( $form_data->getUrl() );
 		$faucet->setQuery( $form_data->getQuery() );
@@ -106,7 +106,7 @@ class FaucetService{
 	}
 //______________________________________________________________________________
 
-	public function getNullFoucet(){
+	public function getNullFaucet(){
 			$faucet	= new Faucet();
 
 			$faucet->setUrl('');
@@ -120,6 +120,15 @@ class FaucetService{
 			$faucet->setIsDebt( false );
 
 			return $faucet;
+
+	}
+//______________________________________________________________________________
+
+	public function removeFaucet( $id ){
+
+		$faucet	= $this->em->getRepository(Faucet::class)->find( $id );
+		$this->em->remove( $faucet );
+		$this->em->flush();
 
 	}
 //______________________________________________________________________________
