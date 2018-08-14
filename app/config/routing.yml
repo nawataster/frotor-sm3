@@ -6,12 +6,9 @@ showdashboard:
     path: /set/{id}
     defaults: { _controller: AppBundle:Index:dashboard, id: 0 }
     requirements:
-        num: '\d+'
+        id: '\d+'
         
 showdummy:
     path: /dummy
     defaults: { _controller: AppBundle:Index:dummy }    
-        
-#save:
-#    path: /save
-#    defaults: { _controller: AppBundle:Index:save }
+    

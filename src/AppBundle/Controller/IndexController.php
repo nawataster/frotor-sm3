@@ -69,12 +69,11 @@ class IndexController extends Controller{
 	}
 //______________________________________________________________________________
 
-	public function saveAction( Request $request ){
-		$form	= $this->createForm( FaucetForm::class, $faucet );
-		$form->handleRequest($request);
+	public function deleteAction( Request $request, $id ){
 
+$this->container->get('logger')->info( "id: $id", ['dir'=>__FILE__]);
 
-		return $this->redirectToRoute('showdashboard');
+		return $this->redirectToRoute('showindex');
 	}
 //______________________________________________________________________________
 

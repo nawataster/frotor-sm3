@@ -125,11 +125,6 @@ $(document).ready(function(){
 
 	$("#faucet_form_btn_del").click(function(event){
 		affirm( "Confirmation required", "Are you sure you want to delete this faucet?", function(){
-		
-/*					
-			faucet_id = -faucet_id;
-			$('#faucet_form').submit();
-*/
 			
 		});
 	});
@@ -138,7 +133,7 @@ $(document).ready(function(){
 /*
 	$('#dashboardForm').submit(function(event){
 		event.preventDefault();
-		postDashboardData($(this).attr('action'));
+		postDashboardData($(this).attr('action'));       
 		return false;
 	});
 
