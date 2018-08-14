@@ -13,10 +13,8 @@ use AppBundle\Form\FaucetForm;
 class IndexController extends Controller{
 
 	private static function getLastPayInfo( $faucet ){
-		$updated_mk	= strtotime($faucet->getUpdated()->format('Y-m-d H:i:s'));
 		$dt_now		= new DateTime(date('Y-m-d'));
-		$dt_payed	= new DateTime(date( 'Y-m-d', $updated_mk ));
-		return date( 'd-m-Y', $updated_mk ).' ('.$dt_now->diff( $dt_payed )->days.')';
+		return $faucet->getUpdated()->format('d-m-Y').' ('.$dt_now->diff( $faucet->getUpdated() )->days.')';
 	}
 //______________________________________________________________________________
 
@@ -46,6 +44,9 @@ class IndexController extends Controller{
 		$faucet = $this->getDoctrine()
 			->getRepository(Faucet::class)
 			->find( $id );
+
+// 		$fsrv	= $this->container->get(FaucetService::class);
+// 		$faucet	= $fsrv->find( $id );
 
 		$form = $this->createForm( FaucetForm::class, $faucet );
 

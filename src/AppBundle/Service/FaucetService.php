@@ -2,6 +2,8 @@
 namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Entity\Faucet;
+use DateTime;
 
 class FaucetService{
 
@@ -49,7 +51,37 @@ class FaucetService{
 	}
 //______________________________________________________________________________
 
-	public function find(){
+	private static function applyTimeUnit( $faucet ){
+    	$faucet->duration = $faucet->duration / 60;
+    	return $faucet;
+	}
+//______________________________________________________________________________
+
+	public function find( $id ){
+
+// 		$faucet = $this->em
+// 			->getRepository(Faucet::class)
+// 			->find( $id );
+
+// 		$faucet->url= $faucet->url.($faucet->query != '' ? '?'.$faucet->query : '');
+
+
+
+// 		$dt_now = new DateTime( date('Y-m-d') );
+// 		$dt_ban = new DateTime( date('Y-m-d', strtotime($faucet->getBanUntil)) );
+// 		$diff	= $dt_now->diff( $dt_ban, FALSE );
+// 		$faucet->bandays	= $diff->invert ? 0 : $diff->d;
+
+
+
+// 		$updated_mk	= strtotime($faucet->getUpdated()->format('Y-m-d H:i:s'));
+// 		$dt_now		= new DateTime(date('Y-m-d'));
+// 		$dt_payed	= new DateTime(date( 'Y-m-d', $updated_mk ));
+// 		return date( 'd-m-Y', $updated_mk ).' ('.$dt_now->diff( $dt_payed )->days.')';
+
+
+
+// 		return self::applyTimeUnit( $faucet );
 
 	}
 //______________________________________________________________________________
