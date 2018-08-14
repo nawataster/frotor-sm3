@@ -116,9 +116,12 @@
 $(document).ready(function(){
 
 	faucet_id = {{ faucet_id }};
+	
+	( faucet_id == 0 ) ? $("#faucet_form_btn_del").hide():null;
+	
 
 	$("#faucet_form_btn_add").click(function(event){
-		faucet_id = 0;
+		$("#faucet_form_btn_del").hide();
 		window.location.href = '{{ path('showdashboard') }}';
 	});
 	
