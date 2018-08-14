@@ -11,4 +11,10 @@ showdashboard:
 showdummy:
     path: /dummy
     defaults: { _controller: AppBundle:Index:dummy }    
+
+deletefaucet:
+    path: /delete/{id}
+    defaults: { _controller: AppBundle:Index:delete }
+    requirements:
+        id: '\d+'
     
