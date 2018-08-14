@@ -74,14 +74,27 @@ class FaucetService{
 	}
 //______________________________________________________________________________
 
+    private static function prepareUrl( $form_data ){
+    	$url	= $form_data->getUrl();
+
+    	$query	= parse_url( $url, PHP_URL_QUERY );
+		$url	= parse_url( $url, PHP_URL_SCHEME ).'://'.parse_url( $url, PHP_URL_HOST ).parse_url( $url, PHP_URL_PATH );
+
+		$form_data->setUrl( $url );
+		$form_data->setQuery( $query );
+
+    	return $form_data;
+    }
+//______________________________________________________________________________
+
 	public function saveFaucet( $id, $form_data ){
 
-// $this->lg->info(print_r(  $form_data->getInfo() ,1), ['dir'=>__FILE__]);
-
+		$form_data	= self::prepareUrl( $form_data );
 
 		$faucet = $this->em->getRepository(Faucet::class)->find( $id );
 
-// 		$faucet->setUrl();
+		$faucet->setUrl( $form_data->getUrl() );
+		$faucet->setQuery( $form_data->getQuery() );
 		$faucet->setInfo( $form_data->getInfo() );
 		$faucet->setPriority( $form_data->getPriority() );
 		$faucet->setDuration( $form_data->getDuration() * 60 );
