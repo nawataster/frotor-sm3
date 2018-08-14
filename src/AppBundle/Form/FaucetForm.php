@@ -16,22 +16,25 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class FaucetForm extends FormType{
 
-    public function buildForm(FormBuilderInterface $builder, array $options){
-        $builder
-            ->add('url', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Url' ] )
-            ->add('info', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Description' ] )
-            ->add('priority', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Priority' ] )
+	public function buildForm(FormBuilderInterface $builder, array $options){
+		$builder
+			->add('url', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Url' ] )
+			->add('info', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Description' ] )
+			->add('priority', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Priority' ] )
 
 
 //             ->add('info', DateType::class, ['widget' => 'single_text',  'attr' => ['class'=> 'form-control'] ])
 //             ->add('agreeTerms', CheckboxType::class, ['mapped' => false])
-            ->add('save', SubmitType::class, ['attr' => ['class' => 'btn btn-default']])
-            ;
-    }
+			->add('save', SubmitType::class, ['attr' => ['class' => 'btn btn-default']])
+		;
+	}
+//______________________________________________________________________________
 
 	public function configureOptions(OptionsResolver $resolver){
-	    $resolver->setDefaults([
-	        'data_class' => Faucet::class,
-	    ]);
+		$resolver->setDefaults([
+			'data_class' => Faucet::class,
+		]);
 	}
-}
+//______________________________________________________________________________
+
+}// Class end

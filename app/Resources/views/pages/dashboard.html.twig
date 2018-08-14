@@ -6,6 +6,36 @@
 <div class="container dasboard-frotor">
 {{ form_start(form, {'attr':{'class':'form-horizontal'}}) }}
 
+
+
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+
+				<label for="faucet_id" class="col-sm-4 control-label id-dasboard-frotor-label">Id </label>
+				<div class="col-sm-5">
+					<div id="faucet_id" class="badge id-dasboard-frotor-div">{{ faucet.id ? faucet.id : 'New faucet' }}</div>
+				</div>
+				<div class="col-sm-3 tools-btn">
+					<div class="btn-group btn-group-xs pull-right" role="group">
+
+{#
+						{!! Html::link('/','',['class'=>'btn btn-default glyphicon glyphicon-home','title'=>'Home']) !!}
+						{!! Form::button('',['id'=>'btn_reset','class'=>'btn btn-default glyphicon glyphicon-refresh','title'=>'Reset all untils']) !!}
+						{!! Form::button('',['id'=>'btn_add','class'=>'btn btn-default glyphicon glyphicon-plus-sign','title'=>'Add faucet']) !!}
+						{!! Form::button('',['id'=>'btn_del','class'=>'btn btn-default glyphicon glyphicon-trash','title'=>'Delete faucet']) !!}
+#}
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+
+
+
     <div class="row">
 		<div class="col-sm-8">
 			<div class="form-group">
