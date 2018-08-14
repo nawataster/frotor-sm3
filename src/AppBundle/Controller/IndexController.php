@@ -40,6 +40,11 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function dashboardAction( Request $request, $id ){
+
+		if( $id < 0 ){
+			return;
+		}
+
 		$fsrv	= $this->container->get(FaucetService::class);
 
 

@@ -122,6 +122,17 @@ $(document).ready(function(){
 		window.location.href = '{{ path('showdashboard') }}';
 	});
 	
+
+	$("#faucet_form_btn_del").click(function(event){
+		affirm( "Confirmation required", "Are you sure you want to delete this faucet?", function(){
+		
+/*					
+			faucet_id = -faucet_id;
+			$('#faucet_form').submit();
+*/
+			
+		});
+	});
 	
 	
 /*
@@ -129,13 +140,6 @@ $(document).ready(function(){
 		event.preventDefault();
 		postDashboardData($(this).attr('action'));
 		return false;
-	});
-
-	$("#btn_del").click(function(event){
-		affirm( "Confirmation required", "Are you sure you want to delete this faucet?", function(){
-			faucet_id = -faucet_id;
-			$('#dashboardForm').submit();
-		});
 	});
 
 	$("#btn_reset").click(function(event){
