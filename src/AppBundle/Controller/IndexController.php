@@ -62,9 +62,12 @@ class IndexController extends Controller{
 			$fsrv->saveFaucet( $faucet->getId(), $form_data );
 		}
 
+		$faucet_id	= $faucet->getId();
+
 		return $this->render('pages/dashboard.html.twig', [
 			'form'		=> $form->createView(),
-			'faucet'	=> $faucet
+			'faucet'	=> $faucet,
+			'faucet_id'	=> $faucet_id ?? 0
 		]);
 	}
 //______________________________________________________________________________
