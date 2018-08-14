@@ -4,8 +4,11 @@
 <div class="jumbotron"></div>
 
 <div class="container dasboard-frotor">
-{{ form_start(form, {'attr':{'class':'form-horizontal'}}) }}
 
+
+
+
+{{ form_start(form, {'attr':{'class':'form-horizontal'}}) }}
 
 
 	<div class="row">
@@ -23,8 +26,13 @@
 						{!! Html::link('/','',['class'=>'btn btn-default glyphicon glyphicon-home','title'=>'Home']) !!}
 						{!! Form::button('',['id'=>'btn_reset','class'=>'btn btn-default glyphicon glyphicon-refresh','title'=>'Reset all untils']) !!}
 						{!! Form::button('',['id'=>'btn_add','class'=>'btn btn-default glyphicon glyphicon-plus-sign','title'=>'Add faucet']) !!}
-						{!! Form::button('',['id'=>'btn_del','class'=>'btn btn-default glyphicon glyphicon-trash','title'=>'Delete faucet']) !!}
+						{!! Form::button('',['id'=>'btn_del','class'=>'btn btn-default glyphicon glyphicon-trash','title'=>'Delete faucet']) !!} bandays
 #}
+
+						{{ form_widget(form.btn_home) }}
+						{{ form_widget(form.btn_reset) }}
+						{{ form_widget(form.btn_add) }}
+						{{ form_widget(form.btn_del) }}
 
 					</div>
 				</div>
@@ -71,6 +79,37 @@
 		</div>
 		<div class="col-sm-4"></div>
     </div>
+
+    <div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+        {{ form_label(form.duration, null, {'label_attr':{'class':'col-sm-4 control-label'}} ) }}
+				<div class="col-sm-8">
+        {{ form_widget(form.duration) }}
+        		</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+    </div>
+{# 
+    <div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+        {{ form_label(form.bandays, null, {'label_attr':{'class':'col-sm-4 control-label'}} ) }}
+				<div class="col-sm-8">
+        {{ form_widget(form.bandays) }}
+        		</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+    </div>
+#}
+    
+    
+    
+    
+    
+    
     
 {{ form_end(form) }}
 </div>
