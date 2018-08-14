@@ -61,9 +61,7 @@ class FaucetService{
 	}
 //______________________________________________________________________________
 
-	public function getFaucet( $id ){
-		$faucet = $this->em->getRepository(Faucet::class)->find( $id );
-
+	public function prepareFaucet( $faucet ){
 		$url	= $faucet->getUrl().($faucet->getQuery() != '' ? '?'.$faucet->getQuery() : '');
 		$faucet->setUrl( $url );
 
@@ -75,4 +73,21 @@ class FaucetService{
 		return self::applyTimeUnit( $faucet );;
 	}
 //______________________________________________________________________________
-}
+
+	public function saveFaucet( $id, $form_data ){
+
+// $this->lg->info(print_r(  $form_data->getInfo() ,1), ['dir'=>__FILE__]);
+
+
+		$faucet = $this->em->getRepository(Faucet::class)->find( $id );
+
+// 		$faucet->setUrl();
+		$faucet->setInfo( $form_data->getInfo() );
+		$faucet->setPriority( $form_data->getPriority() );
+		$faucet->setDuration( $form_data->getDuration() * 60 );
+
+		$this->em->flush();
+	}
+//______________________________________________________________________________
+
+}// Class end

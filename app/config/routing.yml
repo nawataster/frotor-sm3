@@ -10,4 +10,8 @@ showdashboard:
         
 showdummy:
     path: /dummy
-    defaults: { _controller: AppBundle:Index:dummy }
+    defaults: { _controller: AppBundle:Index:dummy }    
+        
+#save:
+#    path: /save
+#    defaults: { _controller: AppBundle:Index:save }

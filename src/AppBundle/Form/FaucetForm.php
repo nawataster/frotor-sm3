@@ -22,7 +22,7 @@ class FaucetForm extends FormType{
 			->add('url', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Url' ] )
 			->add('info', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Description' ] )
 			->add('priority', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Priority' ] )
-			->add('duration', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Duration' ] )
+			->add('duration', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Duration (мин)' ] )
 			->add('bandays', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Days to ban' ] )
 
 			->add('save', SubmitType::class, ['attr' => ['class' => 'btn btn-default']])

@@ -5,11 +5,7 @@
 
 <div class="container dasboard-frotor">
 
-
-
-
-{{ form_start(form, {'attr':{'class':'form-horizontal'}}) }}
-
+{{ form_start(form, {'attr':{'class':'form-horizontal' }}) }}
 
 	<div class="row">
 		<div class="col-sm-8">
@@ -21,14 +17,6 @@
 				</div>
 				<div class="col-sm-3 tools-btn">
 					<div class="btn-group btn-group-xs pull-right" role="group">
-
-{#
-						{!! Html::link('/','',['class'=>'btn btn-default glyphicon glyphicon-home','title'=>'Home']) !!}
-						{!! Form::button('',['id'=>'btn_reset','class'=>'btn btn-default glyphicon glyphicon-refresh','title'=>'Reset all untils']) !!}
-						{!! Form::button('',['id'=>'btn_add','class'=>'btn btn-default glyphicon glyphicon-plus-sign','title'=>'Add faucet']) !!}
-						{!! Form::button('',['id'=>'btn_del','class'=>'btn btn-default glyphicon glyphicon-trash','title'=>'Delete faucet']) !!} bandays
-#}
-
 						{{ form_widget(form.btn_home) }}
 						{{ form_widget(form.btn_reset) }}
 						{{ form_widget(form.btn_add) }}
@@ -41,8 +29,6 @@
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
-
-
 
     <div class="row">
 		<div class="col-sm-8">
@@ -103,10 +89,8 @@
 		</div>
 		<div class="col-sm-4"></div>
     </div>
-{##}
     
-    
-
+{# Button Submit #}
 	<div class="row">
 		<div class="col-sm-8">
 			<div class="form-group">
@@ -119,10 +103,6 @@
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
-    
-    
-    
-    
     
 {{ form_end(form) }}
 </div>
