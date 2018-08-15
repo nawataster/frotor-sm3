@@ -23,7 +23,6 @@ class IndexController extends Controller{
 		$faucet	= $fsrv->getFirstReadyFaucet();
 		$count	= $fsrv->faucetCount();
 
-
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
@@ -34,16 +33,13 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function dummyAction( Request $request ) {
-
 		return $this->render('pages/dummy.html.twig', []);
 	}
 //______________________________________________________________________________
 
 	public function dashboardAction( Request $request, $id ){
-
-		if( $id < 0 ){
+		if( $id < 0 )
 			return;
-		}
 
 		$fsrv	= $this->container->get(FaucetService::class);
 
@@ -56,9 +52,12 @@ class IndexController extends Controller{
 		$form	= $this->createForm( FaucetForm::class, $faucet );
 		$form->handleRequest($request);
 
+		$message	= '';
 		if( $form->isSubmitted() && $form->isValid() ){
 			$form_data = $form->getData();
-			$fsrv->saveFaucet( $faucet->getId(), $form_data );
+			$message	= $fsrv->saveFaucet( $faucet->getId(), $form_data )
+				? 'Successfully saved.'
+				: 'Problem while saveing.';
 		}
 
 		$faucet_id	= $faucet->getId();
@@ -66,7 +65,8 @@ class IndexController extends Controller{
 		return $this->render('pages/dashboard.html.twig', [
 			'form'		=> $form->createView(),
 			'faucet'	=> $faucet,
-			'faucet_id'	=> $faucet_id ?? 0
+			'faucet_id'	=> ($faucet_id ?? 0),
+			'message'	=> $message
 		]);
 	}
 //______________________________________________________________________________

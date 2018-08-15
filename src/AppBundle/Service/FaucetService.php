@@ -33,7 +33,6 @@ class FaucetService{
 //______________________________________________________________________________
 
 	public function getFirstReadyFaucet(){
-
 		$qb		= $this->getActiveFaucetsObj()
 			->setMaxResults( 1 )
 			->addSelect('RAND() as HIDDEN rand')
@@ -88,7 +87,6 @@ class FaucetService{
 //______________________________________________________________________________
 
 	public function saveFaucet( $id, $form_data ){
-
 		$form_data	= self::prepareUrl( $form_data );
 
 		$faucet = (bool)$id
@@ -103,33 +101,32 @@ class FaucetService{
 
 		!(bool)$id ? $this->em->persist($faucet):null;
 		$this->em->flush();
+
+		return true;
 	}
 //______________________________________________________________________________
 
 	public function getNullFaucet(){
-			$faucet	= new Faucet();
+		$faucet	= new Faucet();
 
-			$faucet->setUrl('');
-			$faucet->setDuration( 1800 );
+		$faucet->setUrl('');
+		$faucet->setDuration( 1800 );
 
-			$faucet->setUpdated( new DateTime(date('Y-m-d H:i:s')) );
-			$faucet->setUntil( new DateTime(date('Y-m-d H:i:s')) );
-			$faucet->setBanUntil( new DateTime(date('Y-m-d H:i:s', strtotime( '-1 day' ))) );
+		$faucet->setUpdated( new DateTime(date('Y-m-d H:i:s')) );
+		$faucet->setUntil( new DateTime(date('Y-m-d H:i:s')) );
+		$faucet->setBanUntil( new DateTime(date('Y-m-d H:i:s', strtotime( '-1 day' ))) );
 
-			$faucet->setPriority( 1 );
-			$faucet->setIsDebt( false );
+		$faucet->setPriority( 1 );
+		$faucet->setIsDebt( false );
 
-			return $faucet;
-
+		return $faucet;
 	}
 //______________________________________________________________________________
 
 	public function removeFaucet( $id ){
-
 		$faucet	= $this->em->getRepository(Faucet::class)->find( $id );
 		$this->em->remove( $faucet );
 		$this->em->flush();
-
 	}
 //______________________________________________________________________________
 
