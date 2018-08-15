@@ -140,23 +140,10 @@ $(document).ready(function(){
 			window.location.href = '{{ path('deletefaucet', {id: faucet_id}) }}';
 		});
 	});
-	
 
-	
-/*
-	$('#dashboardForm').submit(function(event){
-		event.preventDefault();
-		postDashboardData($(this).attr('action'));       
-		return false;
+	$("#faucet_form_btn_home").click(function(event){
+		window.location.href = '{{ path('showindex') }}';
 	});
-
-	$("#btn_reset").click(function(event){
-		$("#dashboardForm").attr("action","{!! url('/') !!}/resetall");
-		$('#dashboardForm').submit();
-	});
-
-/*   */
-
 
 });
 </script>
