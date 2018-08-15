@@ -9,6 +9,7 @@ use DateTime;
 // use Psr\Log\LoggerInterface;
 use AppBundle\Entity\Faucet;
 use AppBundle\Form\FaucetForm;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends Controller{
 
@@ -75,6 +76,17 @@ class IndexController extends Controller{
 	public function deleteAction( Request $request, $id ){
 		$this->container->get(FaucetService::class)->removeFaucet( $id );
 		return $this->redirectToRoute('showindex');
+	}
+//______________________________________________________________________________
+
+	public function postIndexAction(  Request $request, $action  ){
+
+
+		$json_ret	= [ 'success' => true, 'Message' => 'Success was gotttt.' ];
+// 		echo json_encode( $json_ret );
+// 		exit;
+
+		return new JsonResponse($json_ret);
 	}
 //______________________________________________________________________________
 

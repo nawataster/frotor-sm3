@@ -29,7 +29,6 @@ function inform( title, message, focusId, callback ){
 }
 //______________________________________________________________________________
 
-
 /**
  * extends confirm functionality.
  * @param title
@@ -79,6 +78,34 @@ function loadFaucet( isNewTab ){
 		.removeClass( "glyphicon-play" )
 		.addClass( "glyphicon-repeat" )
 		.attr( "title","Refresh" );
+}
+//______________________________________________________________________________
+
+function processAction( url ){
+
+	$.ajax({
+		url: url,
+		type: "POST",
+		async: true,
+		dataType: "json",
+		data: {},
+		success: function( data, textStatus, jqXHR ) {
+
+console.log(data);
+
+			if( !data.success ){
+				alert(data.Message);
+				return;
+			}
+
+
+		},
+		error: function( jqXHR, textStatus, errorThrown ) {
+			show_alert( "Error RRRRRRR." );
+		}
+	});
+
+
 }
 //______________________________________________________________________________
 

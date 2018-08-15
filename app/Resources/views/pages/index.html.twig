@@ -119,11 +119,11 @@ $(document).ready(function(){
 			case "settings_btn":
 				window.location.href = '{{ path('showdashboard', {id: faucet_id}) }}';
 				break;
-/*
-			case "next_btn":
-				$('#faucetForm').submit();
-				break;
 
+			case "next_btn":
+				processAction( "{{ path('postindex', {action: 'next'}) }}" );
+				break;
+/*
 			case "tomorrow_btn":
 				affirm( "Confirmation required", "Are you sure to postpone this faucet untill tomorrow?", function(){
 					$('#faucetForm').submit();

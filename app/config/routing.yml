@@ -17,4 +17,10 @@ deletefaucet:
     defaults: { _controller: AppBundle:Index:delete }
     requirements:
         id: '\d+'
+
+postindex:
+    path: /postindex/{action}
+    defaults: { _controller: AppBundle:Index:postIndex, action: 'undefined' }
+    requirements:
+        action: '\w+'
     
