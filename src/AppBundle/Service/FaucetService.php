@@ -87,11 +87,12 @@ class FaucetService{
 //______________________________________________________________________________
 
 	public function saveFaucet( $id, $form_data ){
+
 		$form_data	= self::prepareUrl( $form_data );
 
 		$faucet = (bool)$id
 			? $this->em->getRepository(Faucet::class)->find( $id )
-			: $this->getNullFaucet();
+			: $this->em->getRepository(Faucet::class)->getNullFaucet();
 
 		$faucet->setUrl( $form_data->getUrl() );
 		$faucet->setQuery( $form_data->getQuery() );
@@ -103,24 +104,6 @@ class FaucetService{
 		$this->em->flush();
 
 		return true;
-	}
-//______________________________________________________________________________
-
-	public function getNullFaucet(){
-		$faucet	= new Faucet();
-		$dt_now	= new DateTime();
-
-		$faucet->setUrl('');
-		$faucet->setDuration( 1800 );
-
-		$faucet->setUpdated( $dt_now );
-		$faucet->setUntil( $dt_now );
-		$faucet->setBanUntil( new DateTime(date('Y-m-d H:i:s', strtotime( '-1 day' ))) );
-
-		$faucet->setPriority( 1 );
-		$faucet->setIsDebt( false );
-
-		return $faucet;
 	}
 //______________________________________________________________________________
 

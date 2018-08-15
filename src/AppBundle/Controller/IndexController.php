@@ -47,7 +47,7 @@ class IndexController extends Controller{
 
 		$faucet	= (bool)$id
 			? $this->getDoctrine()->getRepository(Faucet::class)->find( $id )
-			: $fsrv->getNullFaucet();
+			: $this->getDoctrine()->getRepository(Faucet::class)->getNullFaucet();
 
 		$faucet	= $fsrv->prepareFaucet( $faucet );
 
