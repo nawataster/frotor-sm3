@@ -107,13 +107,6 @@ class FaucetService{
 	}
 //______________________________________________________________________________
 
-	public function removeFaucet( $id ){
-		$faucet	= $this->em->getRepository(Faucet::class)->find( $id );
-		$this->em->remove( $faucet );
-		$this->em->flush();
-	}
-//______________________________________________________________________________
-
 	public function updateUntil( $data ){
 		$faucet	= $this->em->getRepository(Faucet::class)->find( $data['id'] );
 

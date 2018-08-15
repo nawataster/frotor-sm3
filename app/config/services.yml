@@ -44,3 +44,6 @@ services:
         
     AppBundle\Service\FaucetService:
         public: true
+
+    AppBundle\Repository\FaucetRepository:
+        tags: ['doctrine.repository_service']

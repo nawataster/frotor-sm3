@@ -10,8 +10,18 @@ use DateTime;
 use AppBundle\Entity\Faucet;
 use AppBundle\Form\FaucetForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
 
 class IndexController extends Controller{
+
+	private $em;
+	private $odb;
+
+	public function __construct( EntityManagerInterface $em ){
+		$this->em	= $em;
+ 		$this->odb	= $em->getRepository(Faucet::class);
+	}
+//______________________________________________________________________________
 
 	private static function getLastPayInfo( $faucet ){
 		$dt_now		= new DateTime(date('Y-m-d'));
@@ -46,8 +56,8 @@ class IndexController extends Controller{
 		$fsrv	= $this->container->get(FaucetService::class);
 
 		$faucet	= (bool)$id
-			? $this->getDoctrine()->getRepository(Faucet::class)->find( $id )
-			: $this->getDoctrine()->getRepository(Faucet::class)->getNullFaucet();
+			? $this->odb->find( $id )
+			: $this->odb->getNullFaucet();
 
 		$faucet	= $fsrv->prepareFaucet( $faucet );
 
@@ -74,7 +84,7 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function deleteAction( Request $request, $id ){
-		$this->container->get(FaucetService::class)->removeFaucet( $id );
+		$this->odb->removeFaucet( $id );
 		return $this->redirectToRoute('showindex');
 	}
 //______________________________________________________________________________
