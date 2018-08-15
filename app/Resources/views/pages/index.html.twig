@@ -132,8 +132,17 @@ $(document).ready(function(){
 
 			case "next_btn":
 				pdata.url	= '{{ path('showindex') }}';
-				var res	= processAction( "{{ path('postindex', {action: 'next'}) }}", pdata );
+				processAction( "{{ path('postindex', {action: 'next'}) }}", pdata );
 				break;
+
+			case "btn_reset":
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'reset'}) }}", pdata );
+				break;
+				
+				
+				
+				
 /*
 			case "tomorrow_btn":
 				affirm( "Confirmation required", "Are you sure to postpone this faucet untill tomorrow?", function(){

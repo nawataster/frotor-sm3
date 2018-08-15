@@ -85,9 +85,17 @@ class IndexController extends Controller{
 
 
 		switch( $action ){
+
 			case 'next':
 				if( !$fsrv->updateUntil( $post ) ){
 					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value.', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
+				break;
+
+			case 'reset':
+				if( !$fsrv->resetAll( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild resetting all faucetse.', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}
 				break;
