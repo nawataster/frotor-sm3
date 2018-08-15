@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="jumbotron"></div>
+
+<div class="container dasboard-frotor">
+
+{{ form_start(form, {'attr':{'class':'form-horizontal' }}) }}
+
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+
+				<label for="faucet_id" class="col-sm-4 control-label id-dasboard-frotor-label">Id </label>
+				<div class="col-sm-5">
+					<div id="faucet_id" class="badge id-dasboard-frotor-div">{{ faucet_id ? faucet_id : 'New' }}</div>
+				</div>
+				<div class="col-sm-3 tools-btn">
+					<div class="btn-group btn-group-xs pull-right" role="group">
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+
+    <div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+        {{ form_label(form.url, null, {'label_attr':{'class':'col-sm-4 control-label'}} ) }}
+				<div class="col-sm-8">
+        {{ form_widget(form.url) }}
+        		</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+        {{ form_label(form.info, null, {'label_attr':{'class':'col-sm-4 control-label'}} ) }}
+				<div class="col-sm-8">
+        {{ form_widget(form.info) }}
+        		</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+        {{ form_label(form.priority, null, {'label_attr':{'class':'col-sm-4 control-label'}} ) }}
+				<div class="col-sm-8">
+        {{ form_widget(form.priority) }}
+        		</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+        {{ form_label(form.duration, null, {'label_attr':{'class':'col-sm-4 control-label'}} ) }}
+				<div class="col-sm-8">
+        {{ form_widget(form.duration) }}
+        		</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+    </div>
+
+    <div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+        {{ form_label(form.bandays, null, {'label_attr':{'class':'col-sm-4 control-label'}} ) }}
+				<div class="col-sm-8">
+        {{ form_widget(form.bandays) }}
+        		</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+    </div>
+
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="form-group">
+				<div class="col-sm-12 tools-btn">
+					<div class="btn-group pull-right" role="group">
+		                {{ form_widget(form.save) }}
+						{{ form_widget(form.btn_add) }}
+						{{ form_widget(form.btn_del) }}
+		                {{ form_widget(form.btn_home) }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+
+{{ form_end(form) }}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+	var message	= "{{ message }}";
+	
+	faucet_id = {{ faucet_id }};
+	
+	if( message != "" ){
+    	std_dlg
+    		.dialog( "option", "width", "450px" )
+    	    .dialog( "option", "title", "Operation result" )
+    		.dialog( "option", "buttons",[
+    			{
+    				"text": "Close",
+    				"click": function(){
+    					$(this).dialog("close");
+    				}
+    			}
+    		]).html( message ).dialog("open");
+	}
+	
+	( faucet_id == 0 ) ? $("#faucet_form_btn_del").hide():null;
+
+	$("#faucet_form_btn_add").click(function(event){
+		$("#faucet_form_btn_del").hide();
+		window.location.href = '{{ path('showdashboard') }}';
+	});
+
+	$("#faucet_form_btn_del").click(function(event){
+		affirm( "Confirmation required", "Are you sure you want to delete this faucet?", function(){
+			window.location.href = '{{ path('deletefaucet', {id: faucet_id}) }}';
+		});
+	});
+
+	$("#faucet_form_btn_home").click(function(event){
+		window.location.href = '{{ path('showindex') }}';
+	});
+
+});
+</script>
+{% endblock %}

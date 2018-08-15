@@ -2,7 +2,7 @@
 
 html, body{
 	height: 99.82%;
-	background-color: #f1e4dc;
+	background-color: #e3f3f4;
 	margin: 0;
 	padding: 0;
 	color: #000;
@@ -182,7 +182,7 @@ table.main-tbl td.no-active-td{
 	white-space: nowrap;
 }
 .tool-btn-td{
-	width: 160px;
+	width: 180px;
 	white-space: nowrap;
 }
 
