@@ -157,8 +157,8 @@ class FaucetService{
 
 
 
-    	$result	= Faucet::where('until','>',date('Y-m-d H:i:s'))->update( ['until' => date('Y-m-d H:i:s')] );
-    	return Response::json( ['message'=>'All faucets reset to current date!!!', 'id' => $data['id']] );
+//     	$result	= Faucet::where('until','>',date('Y-m-d H:i:s'))->update( ['until' => date('Y-m-d H:i:s')] );
+//     	return Response::json( ['message'=>'All faucets reset to current date!!!', 'id' => $data['id']] );
 
 
 
@@ -167,19 +167,19 @@ class FaucetService{
 
 
 
-		$faucet	= $this->em->getRepository(Faucet::class)->find( $data['id'] );
+// 		$faucet	= $this->em->getRepository(Faucet::class)->find( $data['id'] );
 
-		if( !$faucet->is_debt ){
-			$updated	= new DateTime();
-			$faucet->setUpdated( $updated );
-		}
+// 		if( !$faucet->is_debt ){
+// 			$updated	= new DateTime();
+// 			$faucet->setUpdated( $updated );
+// 		}
 
-		$until	= new DateTime(date('Y-m-d H:i:s', strtotime( '+'.$data['cduration'].' minute' )));
-		$faucet->setUntil( $until );
+// 		$until	= new DateTime(date('Y-m-d H:i:s', strtotime( '+'.$data['cduration'].' minute' )));
+// 		$faucet->setUntil( $until );
 
-		$faucet->setPriority( $data['priority'] );
+// 		$faucet->setPriority( $data['priority'] );
 
-		$this->em->flush();
+// 		$this->em->flush();
 
 		return true;
 	}
