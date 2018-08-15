@@ -82,3 +82,108 @@
 	</div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var btn_id
+	;
+
+	faucet_id = {{ faucet_id }};
+	faucet_url = "{{ faucet.url }}";
+	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
+
+	if(is_debt){
+		$(".panel-heading.index-heard").addClass("debt");
+		$("#debt_btn").attr("title","Unset debt status");
+	}else{
+		$(".panel-heading.index-heard").removeClass("debt");
+		$("#debt_btn").attr("title","Set debt status");
+	}
+
+	$("button").click(function(ev){
+
+		btn_id	= $(this).attr("id");
+
+		switch( btn_id ){
+
+			case "load_btn":
+				loadFaucet(false);
+				break;
+
+			case "new_tab_btn":
+				loadFaucet(true);
+				break;
+
+			case "settings_btn":
+				window.location.href = '{{ path('showdashboard', {id: faucet_id}) }}';
+				break;
+/*
+			case "next_btn":
+				$('#faucetForm').submit();
+				break;
+
+			case "tomorrow_btn":
+				affirm( "Confirmation required", "Are you sure to postpone this faucet untill tomorrow?", function(){
+					$('#faucetForm').submit();
+				});
+				break;
+
+			case "save_duration_btn":
+				$('#faucetForm').submit();
+				break;
+
+			case "change_order_btn":
+
+				if($('#order').val()=='asc'){
+					$('#order').val('desc');
+
+					$('#change_order_btn')
+						.removeClass('glyphicon-arrow-up')
+						.addClass('glyphicon-arrow-down')
+						.attr("title","Set order ascended");
+				}else{
+					$('#order').val('asc');
+
+					$('#change_order_btn')
+					.removeClass('glyphicon-arrow-down')
+					.addClass('glyphicon-arrow-up')
+					.attr("title","Set order descended");
+				}
+
+				$('#faucetForm').submit();
+				break;
+
+			case "debt_btn":
+				(is_debt)
+					? $(".panel-heading.index-heard").removeClass("debt")
+					: $(".panel-heading.index-heard").addClass("debt");
+
+				setDebtButtonTitle();
+
+				is_debt	= !is_debt;
+
+				$("#faucetForm").submit();
+				break;
+
+			default:
+				alert("Undefind button (link). Button id: "+btn_id);
+/*	 */
+		}
+
+	});
+	
+/*
+	$('#faucetForm').submit(function(event){
+		event.preventDefault();
+		postFaucet($(this).attr('action'),btn_id);
+		return false;
+	});
+	
+	
+/*	 */
+	
+});
+</script>
+{% endblock %}

@@ -1,5 +1,6 @@
 var faucet_id=0, std_dlg
-
+	,faucet_url	= ""
+;
 /**
  * extends confirm functionality.
  * @param title
@@ -34,6 +35,21 @@ function affirm( title, message, callback ){
 
 		$("#aff_no_btn").focus()
 		;
+}
+//______________________________________________________________________________
+
+function loadFaucet( isNewTab ){
+	if( isNewTab ){
+		window.open( faucet_url, "_blank" );
+		return;
+	}
+
+	$("#main_fraim").attr( "src", faucet_url );
+
+	$( "#load_btn" )
+		.removeClass( "glyphicon-play" )
+		.addClass( "glyphicon-repeat" )
+		.attr( "title","Refresh" );
 }
 //______________________________________________________________________________
 

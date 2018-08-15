@@ -25,6 +25,7 @@ class IndexController extends Controller{
 
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
+			'faucet_id'	=> $faucet->getId(),
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
 	    	'order'		=> 'desc',
 	    	'count'		=> $count
