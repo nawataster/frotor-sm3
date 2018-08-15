@@ -81,8 +81,17 @@ class IndexController extends Controller{
 
 	public function postIndexAction(  Request $request, $action  ){
 
+		switch( $action ){
+			case 'next':
+				break;
 
-		$json_ret	= [ 'success' => true, 'Message' => 'Success was gotttt.' ];
+			default:
+				$json_ret	= [ 'success' => false, 'Message' => 'Undefined action: '.$action ];
+				return new JsonResponse($json_ret);
+		}
+
+
+		$json_ret	= [ 'success' => true, 'Message' => 'Success was gotttt. Action: '.$action ];
 // 		echo json_encode( $json_ret );
 // 		exit;
 
