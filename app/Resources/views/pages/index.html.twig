@@ -42,13 +42,14 @@
 			<div class="input-group">
 				<span class="input-group-addon">Minutes to wait&nbsp;</span>
 				
-				<input type="text" name="cduration" id="cduration" class="form-control" value="{{ faucet.duration }}" />
+				<input type="text" name="cduration" id="cduration" class="form-control" value="{{ faucet.duration / 60 }}" />
+				<input type="hidden" name="oduration" id="oduration" value="{{ faucet.duration / 60 }}" />
 				
 				<span class="input-group-btn">
 		        	<button type="button" id="save_duration_btn" class="btn btn-default glyphicon glyphicon-floppy-disk save-btn" title="Save"></button>
 				</span>
 			</div>
-			<input type="hidden" name="oduration" id="oduration" value="{{ faucet.duration }}" />
+			
 		</td>
 {% else %}
 		<td class="no-active-td">&#8212; NO ACTIVE FAUCETS &#8212;</td>
@@ -105,6 +106,14 @@ $(document).ready(function(){
 	$("button").click(function(ev){
 
 		btn_id	= $(this).attr("id");
+		
+		var pdata	= {
+			"id": {{ faucet_id }},
+			"priority":	$("#priority").val(),
+			"cduration": $("#cduration").val(),
+			"oduration": $("#oduration").val(),
+			"order": $("#order").val()
+		};
 
 		switch( btn_id ){
 
@@ -118,10 +127,12 @@ $(document).ready(function(){
 
 			case "settings_btn":
 				window.location.href = '{{ path('showdashboard', {id: faucet_id}) }}';
+				
 				break;
 
 			case "next_btn":
-				processAction( "{{ path('postindex', {action: 'next1'}) }}" );
+				pdata.url	= '{{ path('showindex') }}';
+				var res	= processAction( "{{ path('postindex', {action: 'next'}) }}", pdata );
 				break;
 /*
 			case "tomorrow_btn":

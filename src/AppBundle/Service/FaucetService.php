@@ -64,7 +64,7 @@ class FaucetService{
 		$url	= $faucet->getUrl().($faucet->getQuery() != '' ? '?'.$faucet->getQuery() : '');
 		$faucet->setUrl( $url );
 
-		$dt_now			= new DateTime(date('Y-m-d'));
+		$dt_now			= new DateTime();
 		$dt_ban 		= $faucet->getBanUntil();
 		$diff			= $dt_now->diff( $dt_ban, FALSE );
 		$faucet->bandays= $diff->invert ? 0 : $diff->d;
@@ -108,12 +108,13 @@ class FaucetService{
 
 	public function getNullFaucet(){
 		$faucet	= new Faucet();
+		$dt_now	= new DateTime();
 
 		$faucet->setUrl('');
 		$faucet->setDuration( 1800 );
 
-		$faucet->setUpdated( new DateTime(date('Y-m-d H:i:s')) );
-		$faucet->setUntil( new DateTime(date('Y-m-d H:i:s')) );
+		$faucet->setUpdated( $dt_now );
+		$faucet->setUntil( $dt_now );
 		$faucet->setBanUntil( new DateTime(date('Y-m-d H:i:s', strtotime( '-1 day' ))) );
 
 		$faucet->setPriority( 1 );
@@ -127,6 +128,25 @@ class FaucetService{
 		$faucet	= $this->em->getRepository(Faucet::class)->find( $id );
 		$this->em->remove( $faucet );
 		$this->em->flush();
+	}
+//______________________________________________________________________________
+
+	public function updateUntil( $data ){
+		$faucet	= $this->em->getRepository(Faucet::class)->find( $data['id'] );
+
+		if( !$faucet->is_debt ){
+			$updated	= new DateTime();
+			$faucet->setUpdated( $updated );
+		}
+
+		$until	= new DateTime(date('Y-m-d H:i:s', strtotime( '+'.$data['cduration'].' minute' )));
+		$faucet->setUntil( $until );
+
+		$faucet->setPriority( $data['priority'] );
+
+		$this->em->flush();
+
+		return true;
 	}
 //______________________________________________________________________________
 

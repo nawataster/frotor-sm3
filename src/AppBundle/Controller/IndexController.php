@@ -80,9 +80,16 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function postIndexAction(  Request $request, $action  ){
+		$fsrv	= $this->container->get(FaucetService::class);
+		$post	= $request->request->all();
+
 
 		switch( $action ){
 			case 'next':
+				if( !$fsrv->updateUntil( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value.', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
 				break;
 
 			default:
@@ -90,11 +97,7 @@ class IndexController extends Controller{
 				return new JsonResponse($json_ret);
 		}
 
-
-		$json_ret	= [ 'success' => true, 'Message' => 'Success was gotttt. Action: '.$action ];
-// 		echo json_encode( $json_ret );
-// 		exit;
-
+		$json_ret	= [ 'success' => true, 'post' => $post ];
 		return new JsonResponse($json_ret);
 	}
 //______________________________________________________________________________

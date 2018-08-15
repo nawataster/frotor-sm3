@@ -1,6 +1,8 @@
-var faucet_id=0, std_dlg
+/*var faucet_id=0, std_dlg
 	,faucet_url	= ""
 ;
+
+*/
 
 
 /**
@@ -81,31 +83,28 @@ function loadFaucet( isNewTab ){
 }
 //______________________________________________________________________________
 
-function processAction( url ){
+function processAction( url, fdata ){
+	var res	= true;
 
 	$.ajax({
 		url: url,
 		type: "POST",
 		async: true,
 		dataType: "json",
-		data: {},
+		data: fdata,
 		success: function( data, textStatus, jqXHR ) {
-
-console.log(data);
 
 			if( !data.success ){
 				alert(data.Message);
-				return;
+				return false;
 			}
 
-
+			window.location.href = data.post.url;
 		},
 		error: function( jqXHR, textStatus, errorThrown ) {
-			show_alert( "Error RRRRRRR." );
+			show_alert( "JS system error." );
 		}
 	});
-
-
 }
 //______________________________________________________________________________
 
