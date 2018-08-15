@@ -7,14 +7,14 @@ use AppBundle\Service\FaucetService;
 use DateTime;
 // use Symfony\Component\HttpFoundation\Response;
 // use Psr\Log\LoggerInterface;
+use AppBundle\Entity\Faucet;
+use AppBundle\Form\FaucetForm;
 
 class IndexController extends Controller{
 
 	private static function getLastPayInfo( $faucet ){
-		$updated_mk	= strtotime($faucet->getUpdated()->format('Y-m-d H:i:s'));
 		$dt_now		= new DateTime(date('Y-m-d'));
-		$dt_payed	= new DateTime(date( 'Y-m-d', $updated_mk ));
-		return date( 'd-m-Y', $updated_mk ).' ('.$dt_now->diff( $dt_payed )->days.')';
+		return $faucet->getUpdated()->format('d-m-Y').' ('.$dt_now->diff( $faucet->getUpdated() )->days.')';
 	}
 //______________________________________________________________________________
 
@@ -33,8 +33,47 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function dummyAction( Request $request ) {
-
 		return $this->render('pages/dummy.html.twig', []);
+	}
+//______________________________________________________________________________
+
+	public function dashboardAction( Request $request, $id ){
+		if( $id < 0 )
+			return;
+
+		$fsrv	= $this->container->get(FaucetService::class);
+
+		$faucet	= (bool)$id
+			? $this->getDoctrine()->getRepository(Faucet::class)->find( $id )
+			: $fsrv->getNullFaucet();
+
+		$faucet	= $fsrv->prepareFaucet( $faucet );
+
+		$form	= $this->createForm( FaucetForm::class, $faucet );
+		$form->handleRequest($request);
+
+		$message	= '';
+		if( $form->isSubmitted() && $form->isValid() ){
+			$form_data = $form->getData();
+			$message	= $fsrv->saveFaucet( $faucet->getId(), $form_data )
+				? 'Successfully saved.'
+				: 'Problem while saveing.';
+		}
+
+		$faucet_id	= $faucet->getId();
+
+		return $this->render('pages/dashboard.html.twig', [
+			'form'		=> $form->createView(),
+			'faucet'	=> $faucet,
+			'faucet_id'	=> ($faucet_id ?? 0),
+			'message'	=> $message
+		]);
+	}
+//______________________________________________________________________________
+
+	public function deleteAction( Request $request, $id ){
+		$this->container->get(FaucetService::class)->removeFaucet( $id );
+		return $this->redirectToRoute('showindex');
 	}
 //______________________________________________________________________________
 
