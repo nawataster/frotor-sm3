@@ -1,6 +1,35 @@
 var faucet_id=0, std_dlg
 	,faucet_url	= ""
 ;
+
+
+/**
+ * extends alert functionality. Also sets global is_submit to false.
+ * @param string title
+ * @param string message
+ * @returns void
+ */
+function inform( title, message, focusId, callback ){
+
+	std_dlg
+		.dialog( "option", "width", "450px" )
+	    .dialog( "option", "title", title )
+		.dialog( "option", "buttons",[
+			{
+				text: "Close",
+				click: function(){
+					$(this).dialog("close");
+					(typeof focusId != "undefined" && focusId != null) ? $("#"+focusId).focus() : null;
+					(typeof callback != "undefined") ? callback() : null;
+				}
+			}
+		])
+		.html( message )
+		.dialog("open");
+}
+//______________________________________________________________________________
+
+
 /**
  * extends confirm functionality.
  * @param title
