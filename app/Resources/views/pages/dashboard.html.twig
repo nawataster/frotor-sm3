@@ -17,10 +17,6 @@
 				</div>
 				<div class="col-sm-3 tools-btn">
 					<div class="btn-group btn-group-xs pull-right" role="group">
-						{{ form_widget(form.btn_home) }}
-						{{ form_widget(form.btn_reset) }}
-						{{ form_widget(form.btn_add) }}
-						{{ form_widget(form.btn_del) }}
 
 					</div>
 				</div>
@@ -89,21 +85,22 @@
 		</div>
 		<div class="col-sm-4"></div>
     </div>
-    
 
 	<div class="row">
 		<div class="col-sm-8">
 			<div class="form-group">
-				<div class="col-sm-offset-9 col-sm-3">
+				<div class="col-sm-12 tools-btn">
 					<div class="btn-group pull-right" role="group">
-		{{ form_widget(form.save) }}
+		                {{ form_widget(form.save) }}
+						{{ form_widget(form.btn_add) }}
+						{{ form_widget(form.btn_del) }}
+		                {{ form_widget(form.btn_home) }}
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-4"></div>
 	</div>
-
 
 
 {{ form_end(form) }}
