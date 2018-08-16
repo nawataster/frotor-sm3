@@ -20,7 +20,6 @@ class FaucetRepository extends ServiceEntityRepository{
 
 	public function __construct( RegistryInterface $registry, LoggerInterface $logger ){
         parent::__construct($registry, Faucet::class);
-
         $this->lg	= $logger;
     }
 
@@ -33,7 +32,7 @@ class FaucetRepository extends ServiceEntityRepository{
 
 		$faucet->setUpdated( $dt_now );
 		$faucet->setUntil( $dt_now );
-		$faucet->setBanUntil( new DateTime(date('Y-m-d H:i:s', strtotime( '-1 day' ))) );
+		$faucet->setBanUntil( new DateTime('-1 day') );
 
 		$faucet->setPriority( 1 );
 		$faucet->setIsDebt( false );
@@ -140,7 +139,6 @@ class FaucetRepository extends ServiceEntityRepository{
 //______________________________________________________________________________
 
 	public function updateUntil( $data ){
-
 		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
 
 		if( !$faucet->is_debt ){
@@ -148,10 +146,8 @@ class FaucetRepository extends ServiceEntityRepository{
 			$faucet->setUpdated( $updated );
 		}
 
-		$until	= new DateTime(date('Y-m-d H:i:s', strtotime( '+'.$data['cduration'].' minute' )));
-		$faucet->setUntil( $until );
-
-		$faucet->setPriority( $data['priority'] );
+		$faucet->setUntil( new DateTime( '+'.$data['cduration'].' minute' ) );
+		$faucet->setPriority( $data['priority'] );		//Priority is updated for comfort when next faucet is quered.
 
 		$this->_em->flush();
 
@@ -186,6 +182,16 @@ class FaucetRepository extends ServiceEntityRepository{
 	}
 //______________________________________________________________________________
 
+	public function updateUntilTomorrow( $data ){
+		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
 
+		$faucet->setUntil( new DateTime('+1 day') );
+		$faucet->setIsDebt( true );
+		$faucet->setPriority( $data['priority'] );		//Priority is updated for comfort
+
+		$this->_em->flush();
+		return true;
+	}
+//______________________________________________________________________________
 
 }

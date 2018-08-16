@@ -105,6 +105,13 @@ class IndexController extends Controller{
 				}
 				break;
 
+			case 'tomorrow':
+				if( !$this->odb->updateUntilTomorrow( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild apdating till tomorrow.', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
+				break;
+
 			default:
 				$json_ret	= [ 'success' => false, 'Message' => 'Undefined action: '.$action ];
 				return new JsonResponse($json_ret);

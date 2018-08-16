@@ -140,15 +140,16 @@ $(document).ready(function(){
 				processAction( "{{ path('postindex', {action: 'reset'}) }}", pdata );
 				break;
 				
+			case "tomorrow_btn":
+				affirm( "Confirmation required", "Are you sure to postpone this faucet till tomorrow?", function(){
+					pdata.url	= '{{ path('showindex') }}';
+					processAction( "{{ path('postindex', {action: 'tomorrow'}) }}", pdata );
+				});
+				break;
 				
 				
 				
 /*
-			case "tomorrow_btn":
-				affirm( "Confirmation required", "Are you sure to postpone this faucet untill tomorrow?", function(){
-					$('#faucetForm').submit();
-				});
-				break;
 
 			case "save_duration_btn":
 				$('#faucetForm').submit();
