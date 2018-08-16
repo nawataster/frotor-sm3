@@ -114,19 +114,7 @@ $(document).ready(function(){
 	
 	faucet_id = {{ faucet_id }};
 	
-	if( message != "" ){
-    	std_dlg
-    		.dialog( "option", "width", "450px" )
-    	    .dialog( "option", "title", "Operation result" )
-    		.dialog( "option", "buttons",[
-    			{
-    				"text": "Close",
-    				"click": function(){
-    					$(this).dialog("close");
-    				}
-    			}
-    		]).html( message ).dialog("open");
-	}
+	( message != "" ) ? inform( "Operation result", message ):null;
 	
 	( faucet_id == 0 ) ? $("#faucet_form_btn_del").hide():null;
 

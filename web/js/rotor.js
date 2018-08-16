@@ -1,4 +1,37 @@
-var faucet_id=0, std_dlg
+/*var faucet_id=0, std_dlg
+	,faucet_url	= ""
+;
+
+*/
+
+var action, pdata;
+
+
+/**
+ * extends alert functionality. Also sets global is_submit to false.
+ * @param string title
+ * @param string message
+ * @returns void
+ */
+function inform( title, message, focusId, callback ){
+
+	std_dlg
+		.dialog( "option", "width", "450px" )
+	    .dialog( "option", "title", title )
+		.dialog( "option", "buttons",[
+			{
+				text: "Close",
+				click: function(){
+					$(this).dialog("close");
+					(typeof focusId != "undefined" && focusId != null) ? $("#"+focusId).focus() : null;
+					(typeof callback != "undefined") ? callback() : null;
+				}
+			}
+		])
+		.html( message )
+		.dialog("open");
+}
+//______________________________________________________________________________
 
 /**
  * extends confirm functionality.
@@ -36,6 +69,56 @@ function affirm( title, message, callback ){
 		;
 }
 //______________________________________________________________________________
+
+function loadFaucet( isNewTab ){
+	if( isNewTab ){
+		window.open( faucet_url, "_blank" );
+		return;
+	}
+
+	$("#main_fraim").attr( "src", faucet_url );
+
+	$( "#load_btn" )
+		.removeClass( "glyphicon-play" )
+		.addClass( "glyphicon-repeat" )
+		.attr( "title","Refresh" );
+}
+//______________________________________________________________________________
+
+function processAction( url, fdata ){
+	var res	= true;
+
+	$.ajax({
+		url: url,
+		type: "POST",
+		async: true,
+		dataType: "json",
+		data: fdata,
+		success: function( data, textStatus, jqXHR ) {
+
+//console.log(data);
+
+
+			if( !data.success ){
+				inform( "Warn", data.Message );
+				return false;
+			}
+
+			if( data.post.action == "save_duration" ){
+				inform( "Operation result", data.Message );
+				$("#oduration").val(pdata.cduration);
+				return false;
+			}
+
+			if( data.post.action != "change_order" )
+				window.location.href = data.post.url;
+		},
+		error: function( jqXHR, textStatus, errorThrown ) {
+			alert( "JS system error." );
+		}
+	});
+}
+//______________________________________________________________________________ loadFaucet(false);
 
 $(document).ready(function(){
 

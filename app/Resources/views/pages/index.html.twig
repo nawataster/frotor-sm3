@@ -1,12 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-{#
-{!! Form::open(['url'=>'/faucetation','method'=>'post', 'role'=>'form','id'=>'faucetForm','name'=>'faucetForm']) !!}
-{!! Form::close() !!}
-#}
-
 <div class="panel panel-info main-panel-content">
 	
 	<div class="panel-heading index-heard {{ faucet.isDebt ? 'debt' : '' }}">
@@ -42,13 +36,14 @@
 			<div class="input-group">
 				<span class="input-group-addon">Minutes to wait&nbsp;</span>
 				
-				<input type="text" name="cduration" id="cduration" class="form-control" value="{{ faucet.duration }}" />
+				<input type="text" name="cduration" id="cduration" class="form-control" value="{{ faucet.duration / 60 }}" />
+				<input type="hidden" name="oduration" id="oduration" value="{{ faucet.duration / 60 }}" />
 				
 				<span class="input-group-btn">
-		        	<button type="button" id="save_duration_btn" class="btn btn-default glyphicon glyphicon-floppy-disk save-btn" title="Save"></button>
+		        	<button type="button" id="save_duration_btn" class="btn btn-default glyphicon glyphicon-floppy-disk save-btn" title="Save duration"></button>
 				</span>
 			</div>
-			<input type="hidden" name="oduration" id="oduration" value="{{ faucet.duration }}" />
+			
 		</td>
 {% else %}
 		<td class="no-active-td">&#8212; NO ACTIVE FAUCETS &#8212;</td>
@@ -81,4 +76,120 @@
 	   <iframe id="main_fraim" class="main-fraim" src="{{ path('showdummy') }}"></iframe>
 	</div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var btn_id
+	;
+
+	faucet_id = {{ faucet_id }};
+	faucet_url = "{{ faucet.url }}";
+	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
+	action	= "{{ action }}";
+
+	if(is_debt){
+		$(".panel-heading.index-heard").addClass("debt");
+		$("#debt_btn").attr("title","Unset debt status");
+	}else{
+		$(".panel-heading.index-heard").removeClass("debt");
+		$("#debt_btn").attr("title","Set debt status");
+	}
+
+	$("button").click(function(ev){
+
+		btn_id	= $(this).attr("id");
+		
+		pdata	= {
+			"id": {{ faucet_id }},
+			"priority":	$("#priority").val(),
+			"cduration": $("#cduration").val(),
+			"oduration": $("#oduration").val(),
+			"order": $("#order").val()
+		};
+
+		switch( btn_id ){
+
+			case "load_btn":
+				loadFaucet(false);
+				break;
+
+			case "new_tab_btn":
+				loadFaucet(true);
+				break;
+
+			case "settings_btn":
+				window.location.href = '{{ path('showdashboard', {id: faucet_id}) }}';
+				
+				break;
+
+			case "next_btn":
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'next'}) }}", pdata );
+				break;
+
+			case "btn_reset":
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'reset'}) }}", pdata );
+				break;
+				
+			case "tomorrow_btn":
+				affirm( "Confirmation required", "Are you sure to postpone this faucet till tomorrow?", function(){
+					pdata.url	= '{{ path('showindex') }}';
+					processAction( "{{ path('postindex', {action: 'tomorrow'}) }}", pdata );
+				});
+				break;
+
+			case "save_duration_btn":
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'save_duration'}) }}", pdata );
+				break;
+
+			case "change_order_btn":
+
+				if($('#order').val()=='asc'){
+					$('#order').val('desc');
+
+					$('#change_order_btn')
+						.removeClass('glyphicon-arrow-up')
+						.addClass('glyphicon-arrow-down')
+						.attr("title","Set order ascended");
+				}else{
+					$('#order').val('asc');
+
+					$('#change_order_btn')
+					.removeClass('glyphicon-arrow-down')
+					.addClass('glyphicon-arrow-up')
+					.attr("title","Set order descended");
+				}
+
+				pdata.order	= $("#order").val();
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'change_order'}) }}", pdata );
+				break;
+
+			case "debt_btn":
+				(is_debt)
+					? $(".panel-heading.index-heard").removeClass("debt")
+					: $(".panel-heading.index-heard").addClass("debt");
+
+				is_debt	= !is_debt;
+				break;
+
+			default:
+				alert("Undefind button (link). Button id: "+btn_id);
+
+		}
+
+	});
+ 
+//console.log("action: "+action);
+
+	if((action == "next" || action == "tomorrow"))
+		loadFaucet(false);
+	
+});
+</script>
 {% endblock %}

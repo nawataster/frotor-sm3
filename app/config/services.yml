@@ -42,5 +42,8 @@ services:
             $allowInlineLineBreaks: true
             $ignoreEmptyContextAndExtra: true
         
-    AppBundle\Service\FaucetService:
-        public: true
+#    AppBundle\Service\FaucetService:
+#        public: true
+
+    AppBundle\Repository\FaucetRepository:
+        tags: ['doctrine.repository_service']
