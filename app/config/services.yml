@@ -41,9 +41,6 @@ services:
             $dateFormat: "d-m-Y H:i:s.v"
             $allowInlineLineBreaks: true
             $ignoreEmptyContextAndExtra: true
-        
-    AppBundle\Service\FaucetService:
-        public: true
 
     AppBundle\Repository\FaucetRepository:
         tags: ['doctrine.repository_service']

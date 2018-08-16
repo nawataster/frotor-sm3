@@ -87,21 +87,20 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function postIndexAction(  Request $request, $action  ){
-		$fsrv	= $this->container->get(FaucetService::class);
 		$post	= $request->request->all();
 
 
 		switch( $action ){
 
 			case 'next':
-				if( !$fsrv->updateUntil( $post ) ){
+				if( !$this->odb->updateUntil( $post ) ){
 					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value.', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}
 				break;
 
 			case 'reset':
-				if( !$fsrv->resetAll( $post ) ){
+				if( !$this->odb->resetAll( $post ) ){
 					$json_ret	= [ 'success' => false, 'Message' => 'Faild resetting all faucetse.', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}

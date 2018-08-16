@@ -13,8 +13,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * repository methods below.
  */
 // class FaucetRepository extends \Doctrine\ORM\EntityRepository
-class FaucetRepository extends ServiceEntityRepository
-{
+class FaucetRepository extends ServiceEntityRepository{
 
 	public function __construct( RegistryInterface $registry){
         parent::__construct($registry, Faucet::class);
@@ -132,6 +131,60 @@ class FaucetRepository extends ServiceEntityRepository
 		return [
 			'n_act' => count($this->getActiveFaucetsObj()->getQuery()->getResult()),
 			'n_all' => count($this->_em->getRepository(Faucet::class)->findAll())];
+	}
+//______________________________________________________________________________
+
+	public function updateUntil( $data ){
+		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
+
+		if( !$faucet->is_debt ){
+			$updated	= new DateTime();
+			$faucet->setUpdated( $updated );
+		}
+
+		$until	= new DateTime(date('Y-m-d H:i:s', strtotime( '+'.$data['cduration'].' minute' )));
+		$faucet->setUntil( $until );
+
+		$faucet->setPriority( $data['priority'] );
+
+		$this->_em->flush();
+
+		return true;
+	}
+//______________________________________________________________________________
+
+	public function resetAll( $data ){
+
+
+
+
+
+
+//     	$result	= Faucet::where('until','>',date('Y-m-d H:i:s'))->update( ['until' => date('Y-m-d H:i:s')] );
+//     	return Response::json( ['message'=>'All faucets reset to current date!!!', 'id' => $data['id']] );
+
+
+
+
+
+
+
+
+// 		$faucet	= $this->em->getRepository(Faucet::class)->find( $data['id'] );
+
+// 		if( !$faucet->is_debt ){
+// 			$updated	= new DateTime();
+// 			$faucet->setUpdated( $updated );
+// 		}
+
+// 		$until	= new DateTime(date('Y-m-d H:i:s', strtotime( '+'.$data['cduration'].' minute' )));
+// 		$faucet->setUntil( $until );
+
+// 		$faucet->setPriority( $data['priority'] );
+
+// 		$this->em->flush();
+
+		return true;
 	}
 //______________________________________________________________________________
 
