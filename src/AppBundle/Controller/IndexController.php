@@ -125,13 +125,20 @@ class IndexController extends Controller{
 				}
 				break;
 
+			case 'save_duration':
+				if( !$this->odb->updateDuration( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating duration value.', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
+				break;
+
 			default:
 				$json_ret	= [ 'success' => false, 'Message' => 'Undefined action: '.$action ];
 				return new JsonResponse($json_ret);
 		}
 
 		$post['action']	= $action;
-		$json_ret	= [ 'success' => true, 'post' => $post ];
+		$json_ret	= [ 'success' => true, 'post' => $post, 'Message' => 'Operation successful.' ];
 		return new JsonResponse($json_ret);
 	}
 //______________________________________________________________________________

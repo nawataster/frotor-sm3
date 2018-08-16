@@ -1,12 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-{#
-{!! Form::open(['url'=>'/faucetation','method'=>'post', 'role'=>'form','id'=>'faucetForm','name'=>'faucetForm']) !!}
-{!! Form::close() !!}
-#}
-
 <div class="panel panel-info main-panel-content">
 	
 	<div class="panel-heading index-heard {{ faucet.isDebt ? 'debt' : '' }}">
@@ -46,7 +40,7 @@
 				<input type="hidden" name="oduration" id="oduration" value="{{ faucet.duration / 60 }}" />
 				
 				<span class="input-group-btn">
-		        	<button type="button" id="save_duration_btn" class="btn btn-default glyphicon glyphicon-floppy-disk save-btn" title="Save"></button>
+		        	<button type="button" id="save_duration_btn" class="btn btn-default glyphicon glyphicon-floppy-disk save-btn" title="Save duration"></button>
 				</span>
 			</div>
 			
@@ -147,14 +141,14 @@ $(document).ready(function(){
 					processAction( "{{ path('postindex', {action: 'tomorrow'}) }}", pdata );
 				});
 				break;
-				
+
+			case "save_duration_btn":
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'save_duration'}) }}", pdata );
+				break;
 				
 				
 /*
-
-			case "save_duration_btn":
-				$('#faucetForm').submit();
-				break;
 
 			case "change_order_btn":
 
@@ -205,8 +199,12 @@ $(document).ready(function(){
 	
 /*	 */
 
+ 
+ 
+ 
+//console.log("action: "+action);
 
-	if(action == "next" || action == "tomorrow")
+	if((action == "next" || action == "tomorrow"))
 		loadFaucet(false);
 	
 });

@@ -100,7 +100,12 @@ function processAction( url, fdata ){
 
 
 			if( !data.success ){
-				alert(data.Message);
+				inform( "Warn", data.Message );
+				return false;
+			}
+
+			if( data.post.action == "save_duration" ){
+				inform( "Operation result", data.Message );
 				return false;
 			}
 
