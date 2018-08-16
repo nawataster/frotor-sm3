@@ -11,6 +11,11 @@ use AppBundle\Form\FaucetForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+
 class IndexController extends Controller{
 
 	private $em;
@@ -29,6 +34,11 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function indexAction( Request $request ) {
+
+		$session = new Session(new NativeSessionStorage(), new AttributeBag());
+		$action = $session->get('action', 'init');
+		$session->clear();
+
 		$faucet	= $this->odb->getFirstReadyFaucet();
 		$count	= $this->odb->faucetCount();
 
@@ -37,7 +47,8 @@ class IndexController extends Controller{
 			'faucet_id'	=> $faucet->getId(),
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
 	    	'order'		=> 'desc',
-	    	'count'		=> $count
+	    	'count'		=> $count,
+			'action'	=> $action
         ]);
 	}
 //______________________________________________________________________________
@@ -88,6 +99,8 @@ class IndexController extends Controller{
 	public function postIndexAction(  Request $request, $action  ){
 		$post	= $request->request->all();
 
+		$session = new Session(new NativeSessionStorage(), new AttributeBag());
+		$session->set('action', $action);
 
 		switch( $action ){
 
@@ -117,6 +130,7 @@ class IndexController extends Controller{
 				return new JsonResponse($json_ret);
 		}
 
+		$post['action']	= $action;
 		$json_ret	= [ 'success' => true, 'post' => $post ];
 		return new JsonResponse($json_ret);
 	}

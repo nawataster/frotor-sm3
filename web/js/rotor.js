@@ -4,6 +4,8 @@
 
 */
 
+var action;
+
 
 /**
  * extends alert functionality. Also sets global is_submit to false.
@@ -94,6 +96,9 @@ function processAction( url, fdata ){
 		data: fdata,
 		success: function( data, textStatus, jqXHR ) {
 
+//console.log(data);
+
+
 			if( !data.success ){
 				alert(data.Message);
 				return false;
@@ -106,7 +111,7 @@ function processAction( url, fdata ){
 		}
 	});
 }
-//______________________________________________________________________________
+//______________________________________________________________________________ loadFaucet(false);
 
 $(document).ready(function(){
 

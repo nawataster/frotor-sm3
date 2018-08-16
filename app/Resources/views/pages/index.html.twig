@@ -94,6 +94,7 @@ $(document).ready(function(){
 	faucet_id = {{ faucet_id }};
 	faucet_url = "{{ faucet.url }}";
 	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
+	action	= "{{ action }}";
 
 	if(is_debt){
 		$(".panel-heading.index-heard").addClass("debt");
@@ -202,8 +203,11 @@ $(document).ready(function(){
 		return false;
 	});
 	
-	
 /*	 */
+
+
+	if(action == "next" || action == "tomorrow")
+		loadFaucet(false);
 	
 });
 </script>
