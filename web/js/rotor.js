@@ -110,7 +110,8 @@ function processAction( url, fdata ){
 				return false;
 			}
 
-			window.location.href = data.post.url;
+			if( data.post.action != "change_order" )
+				window.location.href = data.post.url;
 		},
 		error: function( jqXHR, textStatus, errorThrown ) {
 			alert( "JS system error." );

@@ -7,6 +7,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Psr\Log\LoggerInterface;
 
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
 /**
  * FaucetRepository
  *
@@ -118,10 +122,13 @@ class FaucetRepository extends ServiceEntityRepository{
 //______________________________________________________________________________
 
 	public function getFirstReadyFaucet(){
+		$session = new Session(new NativeSessionStorage(), new AttributeBag());
+		$order = $session->get('order', 'desc');
+
 		$qb		= $this->getActiveFaucetsObj()
 			->setMaxResults( 1 )
 			->addSelect('RAND() as HIDDEN rand')
-			->addOrderBy('fct.priority', 'DESC')
+			->addOrderBy('fct.priority', $order )
 			->addOrderBy('rand', 'ASC')
 			;
 

@@ -37,7 +37,7 @@ class IndexController extends Controller{
 
 		$session = new Session(new NativeSessionStorage(), new AttributeBag());
 		$action = $session->get('action', 'init');
-		$session->clear();
+		$session->set('action', 'init');
 
 		$faucet	= $this->odb->getFirstReadyFaucet();
 		$count	= $this->odb->faucetCount();
@@ -46,7 +46,7 @@ class IndexController extends Controller{
 			'faucet'	=> $faucet,
 			'faucet_id'	=> $faucet->getId(),
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
-	    	'order'		=> 'desc',
+	    	'order'		=> $session->get('order', 'desc'),
 	    	'count'		=> $count,
 			'action'	=> $action
         ]);
@@ -130,6 +130,10 @@ class IndexController extends Controller{
 					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating duration value.', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}
+				break;
+
+			case 'change_order':
+				$session->set('order', $post['order']);
 				break;
 
 			default:

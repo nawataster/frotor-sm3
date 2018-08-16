@@ -146,9 +146,6 @@ $(document).ready(function(){
 				pdata.url	= '{{ path('showindex') }}';
 				processAction( "{{ path('postindex', {action: 'save_duration'}) }}", pdata );
 				break;
-				
-				
-/*
 
 			case "change_order_btn":
 
@@ -168,7 +165,9 @@ $(document).ready(function(){
 					.attr("title","Set order descended");
 				}
 
-				$('#faucetForm').submit();
+				pdata.order	= $("#order").val();
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'change_order'}) }}", pdata );
 				break;
 
 			case "debt_btn":
@@ -176,31 +175,15 @@ $(document).ready(function(){
 					? $(".panel-heading.index-heard").removeClass("debt")
 					: $(".panel-heading.index-heard").addClass("debt");
 
-				setDebtButtonTitle();
-
 				is_debt	= !is_debt;
-
-				$("#faucetForm").submit();
 				break;
 
 			default:
 				alert("Undefind button (link). Button id: "+btn_id);
-/*	 */
+
 		}
 
 	});
-	
-/*
-	$('#faucetForm').submit(function(event){
-		event.preventDefault();
-		postFaucet($(this).attr('action'),btn_id);
-		return false;
-	});
-	
-/*	 */
-
- 
- 
  
 //console.log("action: "+action);
 
