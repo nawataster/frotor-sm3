@@ -53,60 +53,6 @@ class FaucetService{
 	}
 //______________________________________________________________________________
 
-	private static function applyTimeUnit( $faucet ){
-    	$duration = $faucet->getDuration() / 60;
-    	$faucet->setDuration($duration);
-    	return $faucet;
-	}
-//______________________________________________________________________________
-
-	public function prepareFaucet( $faucet ){
-		$url	= $faucet->getUrl().($faucet->getQuery() != '' ? '?'.$faucet->getQuery() : '');
-		$faucet->setUrl( $url );
-
-		$dt_now			= new DateTime();
-		$dt_ban 		= $faucet->getBanUntil();
-		$diff			= $dt_now->diff( $dt_ban, FALSE );
-		$faucet->bandays= $diff->invert ? 0 : $diff->d;
-
-		return self::applyTimeUnit( $faucet );;
-	}
-//______________________________________________________________________________
-
-    private static function prepareUrl( $form_data ){
-    	$url	= $form_data->getUrl();
-
-    	$query	= parse_url( $url, PHP_URL_QUERY );
-		$url	= parse_url( $url, PHP_URL_SCHEME ).'://'.parse_url( $url, PHP_URL_HOST ).parse_url( $url, PHP_URL_PATH );
-
-		$form_data->setUrl( $url );
-		$form_data->setQuery( $query );
-
-    	return $form_data;
-    }
-//______________________________________________________________________________
-
-	public function saveFaucet( $id, $form_data ){
-
-		$form_data	= self::prepareUrl( $form_data );
-
-		$faucet = (bool)$id
-			? $this->em->getRepository(Faucet::class)->find( $id )
-			: $this->em->getRepository(Faucet::class)->getNullFaucet();
-
-		$faucet->setUrl( $form_data->getUrl() );
-		$faucet->setQuery( $form_data->getQuery() );
-		$faucet->setInfo( $form_data->getInfo() );
-		$faucet->setPriority( $form_data->getPriority() );
-		$faucet->setDuration( $form_data->getDuration() * 60 );
-
-		!(bool)$id ? $this->em->persist($faucet):null;
-		$this->em->flush();
-
-		return true;
-	}
-//______________________________________________________________________________
-
 	public function updateUntil( $data ){
 		$faucet	= $this->em->getRepository(Faucet::class)->find( $data['id'] );
 

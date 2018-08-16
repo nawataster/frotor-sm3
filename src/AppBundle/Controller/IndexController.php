@@ -53,13 +53,11 @@ class IndexController extends Controller{
 		if( $id < 0 )
 			return;
 
-		$fsrv	= $this->container->get(FaucetService::class);
-
 		$faucet	= (bool)$id
 			? $this->odb->find( $id )
 			: $this->odb->getNullFaucet();
 
-		$faucet	= $fsrv->prepareFaucet( $faucet );
+		$faucet	= $this->odb->prepareFaucet( $faucet );
 
 		$form	= $this->createForm( FaucetForm::class, $faucet );
 		$form->handleRequest($request);
@@ -67,9 +65,9 @@ class IndexController extends Controller{
 		$message	= '';
 		if( $form->isSubmitted() && $form->isValid() ){
 			$form_data = $form->getData();
-			$message	= $fsrv->saveFaucet( $faucet->getId(), $form_data )
-				? 'Successfully saved.'
-				: 'Problem while saveing.';
+			$message	= $this->odb->saveFaucet( $faucet->getId(), $form_data )
+				? 'Data have been successfully saved.'
+				: 'Data saving has been failed.';
 		}
 
 		$faucet_id	= $faucet->getId();
