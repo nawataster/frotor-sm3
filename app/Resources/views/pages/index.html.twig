@@ -131,6 +131,11 @@ $(document).ready(function(){
 				processAction( "{{ path('postindex', {action: 'next'}) }}", pdata );
 				break;
 
+			case "prev_btn":
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'prev'}) }}", pdata );
+				break;
+
 			case "btn_reset":
 				pdata.url	= '{{ path('showindex') }}';
 				processAction( "{{ path('postindex', {action: 'reset'}) }}", pdata );

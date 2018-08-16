@@ -34,6 +34,9 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function indexAction( Request $request ) {
+// 		$post	= $request->request->all();
+
+// $this->container->get('logger')->info(print_r(  $post ,1), ['dir'=>__FILE__]);
 
 		$session = new Session(new NativeSessionStorage(), new AttributeBag());
 		$action = $session->get('action', 'init');
@@ -43,8 +46,22 @@ class IndexController extends Controller{
 		$stack	= $session->get('stack', []);
 		$session->set('stack', $stack);
 
+// $this->container->get('logger')->info( "action: $action", ['dir'=>__FILE__]);
 
-		$faucet	= $this->odb->getFirstReadyFaucet();
+// 		$faucet	= $action == 'prev'
+// 			? $this->odb->find( $post['id'] )
+// 			: $this->odb->getFirstReadyFaucet();
+
+
+			if($action == 'prev'){
+				$stack	= $session->get('stack' );
+				$id		= array_pop( $stack );
+				$faucet	= $this->odb->find( $id );
+			}else{
+				$faucet	= $this->odb->getFirstReadyFaucet();
+			}
+
+
 		$count	= $this->odb->faucetCount();
 
 		return $this->render('pages/index.html.twig', [
@@ -114,12 +131,19 @@ class IndexController extends Controller{
 			case 'next':
 
 				if( !$this->odb->updateUntil( $post ) ){
-					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value.', 'post' => $post ];
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value. ('.$action.')', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}
 				$stack	= $session->get('stack' );
 				array_push($stack, $post['id'] );
 				$session->set('stack', $stack);
+				break;
+
+			case 'prev':
+				if( !$this->odb->updateUntil( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value. ('.$action.')', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
 				break;
 
 			case 'reset':
