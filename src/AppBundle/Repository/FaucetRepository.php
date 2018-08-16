@@ -195,22 +195,9 @@ class FaucetRepository extends ServiceEntityRepository{
 //______________________________________________________________________________
 
 	public function updateDuration( $data ){
-
-$this->lg->info(print_r(  $data ,1), ['dir'=>__FILE__]);
-
-
-// 		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
-
-// 		if( !$faucet->is_debt ){
-// 			$updated	= new DateTime();
-// 			$faucet->setUpdated( $updated );
-// 		}
-
-// 		$faucet->setUntil( new DateTime( '+'.$data['cduration'].' minute' ) );
-// 		$faucet->setPriority( $data['priority'] );		//Priority is updated for comfort when next faucet is quered.
-
-// 		$this->_em->flush();
-
+		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
+		$faucet->setDuration( $data['cduration'] * 60 );
+		$this->_em->flush();
 		return true;
 	}
 //______________________________________________________________________________
