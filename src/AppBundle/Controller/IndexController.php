@@ -39,6 +39,11 @@ class IndexController extends Controller{
 		$action = $session->get('action', 'init');
 		$session->set('action', 'init');
 
+
+		$stack	= $session->get('stack', []);
+		$session->set('stack', $stack);
+
+
 		$faucet	= $this->odb->getFirstReadyFaucet();
 		$count	= $this->odb->faucetCount();
 
@@ -48,6 +53,7 @@ class IndexController extends Controller{
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
 	    	'order'		=> $session->get('order', 'desc'),
 	    	'count'		=> $count,
+    		'btn_grp_css'	=> ($faucet->getId() != NULL ? 'btn_all' : 'btn2'),
 			'action'	=> $action
         ]);
 	}
@@ -102,13 +108,18 @@ class IndexController extends Controller{
 		$session = new Session(new NativeSessionStorage(), new AttributeBag());
 		$session->set('action', $action);
 
+
 		switch( $action ){
 
 			case 'next':
+
 				if( !$this->odb->updateUntil( $post ) ){
 					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value.', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}
+				$stack	= $session->get('stack' );
+				array_push($stack, $post['id'] );
+				$session->set('stack', $stack);
 				break;
 
 			case 'reset':

@@ -57,11 +57,12 @@
 		</td>
 
 		<td class='tool-btn-td'>
-			<div class="btn-group btn-group-sm {!! $btn_grp_css !!} pull-right" role="group" aria-label="Faucet manipulate">
+			<div class="btn-group btn-group-sm {{ btn_grp_css }} pull-right" role="group" aria-label="Faucet manipulate">
 				<button type="button" id="settings_btn" class="btn btn-default glyphicon glyphicon-wrench" title="Settings"></button>
 {% if faucet.id %}
 				<button type="button" id="btn_reset" class="btn btn-default glyphicon glyphicon-refresh" title="Cancel all untils"></button>
 				<button type="button" id="tomorrow_btn" class="btn btn-default glyphicon glyphicon-time" title="Bun till tomorrow"></button>
+				<button type="button" id="prev_btn" class="btn btn-default glyphicon glyphicon-backward" title="Previous faucet"></button>
 				<button type="button" id="load_btn" class="btn btn-default glyphicon glyphicon-play" title="Show current faucet"></button>
 {% endif %}
 				<button type="button" id="next_btn" class="btn btn-default glyphicon glyphicon-forward" title="Next faucet"></button>
