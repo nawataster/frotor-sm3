@@ -30,9 +30,8 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function indexAction( Request $request ) {
-		$fsrv	= $this->container->get(FaucetService::class);
-		$faucet	= $fsrv->getFirstReadyFaucet();
-		$count	= $fsrv->faucetCount();
+		$faucet	= $this->odb->getFirstReadyFaucet();
+		$count	= $this->odb->faucetCount();
 
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
