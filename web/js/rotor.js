@@ -4,7 +4,7 @@
 
 */
 
-var action;
+var action, pdata;
 
 
 /**
@@ -106,6 +106,7 @@ function processAction( url, fdata ){
 
 			if( data.post.action == "save_duration" ){
 				inform( "Operation result", data.Message );
+				$("#oduration").val(pdata.cduration);
 				return false;
 			}
 

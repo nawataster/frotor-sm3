@@ -195,6 +195,10 @@ class FaucetRepository extends ServiceEntityRepository{
 //______________________________________________________________________________
 
 	public function updateDuration( $data ){
+
+$this->lg->info(print_r(  $data ,1), ['dir'=>__FILE__]);
+
+
 // 		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
 
 // 		if( !$faucet->is_debt ){
