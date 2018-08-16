@@ -3,7 +3,6 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Service\FaucetService;
 use DateTime;
 // use Symfony\Component\HttpFoundation\Response;
 // use Psr\Log\LoggerInterface;
@@ -100,7 +99,7 @@ class IndexController extends Controller{
 				break;
 
 			case 'reset':
-				if( !$this->odb->resetAll( $post ) ){
+				if( $this->odb->resetAll( $post ) < 0 ){
 					$json_ret	= [ 'success' => false, 'Message' => 'Faild resetting all faucetse.', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}

@@ -5,6 +5,7 @@ use AppBundle\Entity\Faucet;
 use DateTime;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Psr\Log\LoggerInterface;
 
 /**
  * FaucetRepository
@@ -15,8 +16,12 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 // class FaucetRepository extends \Doctrine\ORM\EntityRepository
 class FaucetRepository extends ServiceEntityRepository{
 
-	public function __construct( RegistryInterface $registry){
+	private $lg;
+
+	public function __construct( RegistryInterface $registry, LoggerInterface $logger ){
         parent::__construct($registry, Faucet::class);
+
+        $this->lg	= $logger;
     }
 
 	public function getNullFaucet(){
@@ -135,6 +140,7 @@ class FaucetRepository extends ServiceEntityRepository{
 //______________________________________________________________________________
 
 	public function updateUntil( $data ){
+
 		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
 
 		if( !$faucet->is_debt ){
@@ -154,37 +160,29 @@ class FaucetRepository extends ServiceEntityRepository{
 //______________________________________________________________________________
 
 	public function resetAll( $data ){
+		$date	= new DateTime();
+		$qb		= $this->_em->createQueryBuilder();
 
+		try {
+			$query	= $qb
+				->update( Faucet::class, 'f' )
+				->set( 'f.until', '?1' )
+	        	->where('f.until > ?2')
 
+	        	->setParameter(1, $date)
+	        	->setParameter(2, $date)
 
+				->getQuery();
 
+//	 			$sql	= $query->getSQL();				//XXX: Left for information.
 
+			$res	= $query->execute();
 
-//     	$result	= Faucet::where('until','>',date('Y-m-d H:i:s'))->update( ['until' => date('Y-m-d H:i:s')] );
-//     	return Response::json( ['message'=>'All faucets reset to current date!!!', 'id' => $data['id']] );
+		} catch (\Exception $e) {
+			return -1;
+		}
 
-
-
-
-
-
-
-
-// 		$faucet	= $this->em->getRepository(Faucet::class)->find( $data['id'] );
-
-// 		if( !$faucet->is_debt ){
-// 			$updated	= new DateTime();
-// 			$faucet->setUpdated( $updated );
-// 		}
-
-// 		$until	= new DateTime(date('Y-m-d H:i:s', strtotime( '+'.$data['cduration'].' minute' )));
-// 		$faucet->setUntil( $until );
-
-// 		$faucet->setPriority( $data['priority'] );
-
-// 		$this->em->flush();
-
-		return true;
+        return $res;
 	}
 //______________________________________________________________________________
 

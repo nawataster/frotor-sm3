@@ -102,7 +102,7 @@ function processAction( url, fdata ){
 			window.location.href = data.post.url;
 		},
 		error: function( jqXHR, textStatus, errorThrown ) {
-			show_alert( "JS system error." );
+			alert( "JS system error." );
 		}
 	});
 }
