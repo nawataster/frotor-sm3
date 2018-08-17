@@ -56,12 +56,25 @@
 			</table>
 		</td>
 
+{% if faucet_id == null %}
+	{% set width = 100 %}
+{% elseif not is_prev_btn %}
+	{% set width = 170 %}
+{% else %}
+	{% set width = 200 %}
+{% endif %}
+
 		<td class='tool-btn-td'>
-			<div class="btn-group btn-group-sm {!! $btn_grp_css !!} pull-right" role="group" aria-label="Faucet manipulate">
+			<div class="btn-group btn-group-sm pull-right" style="width: {{ width }}px;" role="group" aria-label="Faucet manipulate">
 				<button type="button" id="settings_btn" class="btn btn-default glyphicon glyphicon-wrench" title="Settings"></button>
-{% if faucet.id %}
 				<button type="button" id="btn_reset" class="btn btn-default glyphicon glyphicon-refresh" title="Cancel all untils"></button>
+{% if faucet.id %}
 				<button type="button" id="tomorrow_btn" class="btn btn-default glyphicon glyphicon-time" title="Bun till tomorrow"></button>
+				
+	{% if is_prev_btn %}
+				<button type="button" id="prev_btn" class="btn btn-default glyphicon glyphicon-backward" title="Previous faucet"></button>
+	{% endif %}
+				
 				<button type="button" id="load_btn" class="btn btn-default glyphicon glyphicon-play" title="Show current faucet"></button>
 {% endif %}
 				<button type="button" id="next_btn" class="btn btn-default glyphicon glyphicon-forward" title="Next faucet"></button>
@@ -81,7 +94,7 @@
 {% block javascripts %}
 <script type="text/javascript">
 $(document).ready(function(){
-	
+
 	var btn_id
 	;
 
@@ -130,6 +143,11 @@ $(document).ready(function(){
 				processAction( "{{ path('postindex', {action: 'next'}) }}", pdata );
 				break;
 
+			case "prev_btn":
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'prev'}) }}", pdata );
+				break;
+
 			case "btn_reset":
 				pdata.url	= '{{ path('showindex') }}';
 				processAction( "{{ path('postindex', {action: 'reset'}) }}", pdata );
@@ -176,18 +194,20 @@ $(document).ready(function(){
 					: $(".panel-heading.index-heard").addClass("debt");
 
 				is_debt	= !is_debt;
+
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'change_debt'}) }}", pdata );
 				break;
 
 			default:
 				alert("Undefind button (link). Button id: "+btn_id);
 
 		}
-
 	});
  
 //console.log("action: "+action);
 
-	if((action == "next" || action == "tomorrow"))
+	if((action == "next" || action == "prev" || action == "tomorrow"))
 		loadFaucet(false);
 	
 });

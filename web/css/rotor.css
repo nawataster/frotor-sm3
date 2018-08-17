@@ -182,7 +182,7 @@ table.main-tbl td.no-active-td{
 	white-space: nowrap;
 }
 .tool-btn-td{
-	width: 180px;
+	width: 1px; /* Set td fixed*/
 	white-space: nowrap;
 }
 
@@ -199,16 +199,6 @@ table.faucets-info-tbl .faucet-count-td{
 	text-align: right;
 	font-weight: bold;
 }
-
-
-table.main-tbl td.tool-btn-td div.btn4{
-	width: 135px;
-}
-
-table.main-tbl td.tool-btn-td .btn2{
-		width: 80px;
-}
-
 
 div.dasboard-frotor label.control-label{
 	white-space: nowrap;

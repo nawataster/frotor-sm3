@@ -110,7 +110,7 @@ function processAction( url, fdata ){
 				return false;
 			}
 
-			if( data.post.action != "change_order" )
+			if( data.post.action != "change_order" &&  data.post.action != "change_debt" )
 				window.location.href = data.post.url;
 		},
 		error: function( jqXHR, textStatus, errorThrown ) {
@@ -118,7 +118,7 @@ function processAction( url, fdata ){
 		}
 	});
 }
-//______________________________________________________________________________ loadFaucet(false);
+//______________________________________________________________________________
 
 $(document).ready(function(){
 

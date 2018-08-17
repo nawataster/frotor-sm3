@@ -134,7 +134,11 @@ class FaucetRepository extends ServiceEntityRepository{
 
 		$query	= $qb->getQuery();
 		$res	= $query->getResult();
-		return $res[0];
+
+		$ret_val	= $res[0] ?? $this->getNullFaucet();
+		return $ret_val;
+
+// 		return $res[0];
 	}
 //______________________________________________________________________________
 
@@ -204,6 +208,14 @@ class FaucetRepository extends ServiceEntityRepository{
 	public function updateDuration( $data ){
 		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
 		$faucet->setDuration( $data['cduration'] * 60 );
+		$this->_em->flush();
+		return true;
+	}
+//______________________________________________________________________________
+
+	public function updateDebt( $data ){
+		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
+		$faucet->setIsDebt( !(bool)$faucet->getIsDebt() );
 		$this->_em->flush();
 		return true;
 	}

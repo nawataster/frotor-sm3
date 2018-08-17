@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
-
 class IndexController extends Controller{
 
 	private $em;
@@ -29,26 +28,37 @@ class IndexController extends Controller{
 
 	private static function getLastPayInfo( $faucet ){
 		$dt_now		= new DateTime(date('Y-m-d'));
-		return $faucet->getUpdated()->format('d-m-Y').' ('.$dt_now->diff( $faucet->getUpdated() )->days.')';
+		return $faucet ? $faucet->getUpdated()->format('d-m-Y').' ('.$dt_now->diff( $faucet->getUpdated() )->days.')' : '';
 	}
 //______________________________________________________________________________
 
 	public function indexAction( Request $request ) {
-
 		$session = new Session(new NativeSessionStorage(), new AttributeBag());
 		$action = $session->get('action', 'init');
 		$session->set('action', 'init');
 
-		$faucet	= $this->odb->getFirstReadyFaucet();
+		$stack	= $session->get('stack', []);
+		$session->set('stack', $stack);
+
+		if($action == 'prev'){
+			$stack	= $session->get('stack' );
+			$id		= array_pop( $stack );
+			$session->set('stack', $stack);
+			$faucet	= $id ? $this->odb->find( $id ) : $this->odb->getFirstReadyFaucet();
+		}else{
+			$faucet	= $this->odb->getFirstReadyFaucet();
+		}
+
 		$count	= $this->odb->faucetCount();
 
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
-			'faucet_id'	=> $faucet->getId(),
+			'faucet_id'	=> $faucet->getId()??0,
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
 	    	'order'		=> $session->get('order', 'desc'),
 	    	'count'		=> $count,
-			'action'	=> $action
+			'action'	=> $action,
+			'is_prev_btn'	=> (bool)count($stack)
         ]);
 	}
 //______________________________________________________________________________
@@ -105,8 +115,19 @@ class IndexController extends Controller{
 		switch( $action ){
 
 			case 'next':
+
 				if( !$this->odb->updateUntil( $post ) ){
-					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value.', 'post' => $post ];
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value. ('.$action.')', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
+				$stack	= $session->get('stack' );
+				array_push($stack, $post['id'] );
+				$session->set('stack', $stack);
+				break;
+
+			case 'prev':
+				if( !$this->odb->updateUntil( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating until value. ('.$action.')', 'post' => $post ];
 					return new JsonResponse($json_ret);
 				}
 				break;
@@ -136,6 +157,13 @@ class IndexController extends Controller{
 				$session->set('order', $post['order']);
 				break;
 
+			case 'change_debt':
+				if( !$this->odb->updateDebt( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating debt value.', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
+				break;
+
 			default:
 				$json_ret	= [ 'success' => false, 'Message' => 'Undefined action: '.$action ];
 				return new JsonResponse($json_ret);
@@ -145,6 +173,6 @@ class IndexController extends Controller{
 		$json_ret	= [ 'success' => true, 'post' => $post, 'Message' => 'Operation successful.' ];
 		return new JsonResponse($json_ret);
 	}
-//______________________________________________________________________________
+//______________________________________________________________________________ change_debt
 
 }//class end
