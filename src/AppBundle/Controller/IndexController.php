@@ -29,7 +29,7 @@ class IndexController extends Controller{
 
 	private static function getLastPayInfo( $faucet ){
 		$dt_now		= new DateTime(date('Y-m-d'));
-		return $faucet->getUpdated()->format('d-m-Y').' ('.$dt_now->diff( $faucet->getUpdated() )->days.')';
+		return $faucet ? $faucet->getUpdated()->format('d-m-Y').' ('.$dt_now->diff( $faucet->getUpdated() )->days.')' : '';
 	}
 //______________________________________________________________________________
 
@@ -59,12 +59,12 @@ class IndexController extends Controller{
 
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
-			'faucet_id'	=> $faucet->getId(),
+			'faucet_id'	=> $faucet->getId()??0,
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
 	    	'order'		=> $session->get('order', 'desc'),
 	    	'count'		=> $count,
-    		'btn_grp_css'	=> ($faucet->getId() != NULL ? 'btn_all' : 'btn2'),
-			'action'	=> $action
+			'action'	=> $action,
+			'is_prev_btn'	=> (bool)count($stack)
         ]);
 	}
 //______________________________________________________________________________

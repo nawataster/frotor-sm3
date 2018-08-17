@@ -134,7 +134,11 @@ class FaucetRepository extends ServiceEntityRepository{
 
 		$query	= $qb->getQuery();
 		$res	= $query->getResult();
-		return $res[0];
+
+		$ret_val	= $res[0] ?? $this->getNullFaucet();
+		return $ret_val;
+
+// 		return $res[0];
 	}
 //______________________________________________________________________________
 
