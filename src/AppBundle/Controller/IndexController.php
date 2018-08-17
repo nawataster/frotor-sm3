@@ -34,29 +34,22 @@ class IndexController extends Controller{
 //______________________________________________________________________________
 
 	public function indexAction( Request $request ) {
-// 		$post	= $request->request->all();
-
-// $this->container->get('logger')->info(print_r(  $post ,1), ['dir'=>__FILE__]);
-
 		$session = new Session(new NativeSessionStorage(), new AttributeBag());
 		$action = $session->get('action', 'init');
 		$session->set('action', 'init');
-
 
 		$stack	= $session->get('stack', []);
 		$session->set('stack', $stack);
 
 // $this->container->get('logger')->info( "action: $action", ['dir'=>__FILE__]);
 
-// 		$faucet	= $action == 'prev'
-// 			? $this->odb->find( $post['id'] )
-// 			: $this->odb->getFirstReadyFaucet();
-
+// $this->container->get('logger')->info(print_r(  $stack ,1), ['dir'=>__FILE__]);
 
 			if($action == 'prev'){
 				$stack	= $session->get('stack' );
 				$id		= array_pop( $stack );
-				$faucet	= $this->odb->find( $id );
+				$session->set('stack', $stack);
+				$faucet	= $id ? $this->odb->find( $id ) : $this->odb->getFirstReadyFaucet();
 			}else{
 				$faucet	= $this->odb->getFirstReadyFaucet();
 			}
