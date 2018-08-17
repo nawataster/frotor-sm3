@@ -194,13 +194,15 @@ $(document).ready(function(){
 					: $(".panel-heading.index-heard").addClass("debt");
 
 				is_debt	= !is_debt;
+
+				pdata.url	= '{{ path('showindex') }}';
+				processAction( "{{ path('postindex', {action: 'change_debt'}) }}", pdata );
 				break;
 
 			default:
 				alert("Undefind button (link). Button id: "+btn_id);
 
 		}
-
 	});
  
 //console.log("action: "+action);

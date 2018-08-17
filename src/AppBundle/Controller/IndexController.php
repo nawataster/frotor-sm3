@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
-
 class IndexController extends Controller{
 
 	private $em;
@@ -41,19 +40,14 @@ class IndexController extends Controller{
 		$stack	= $session->get('stack', []);
 		$session->set('stack', $stack);
 
-// $this->container->get('logger')->info( "action: $action", ['dir'=>__FILE__]);
-
-// $this->container->get('logger')->info(print_r(  $stack ,1), ['dir'=>__FILE__]);
-
-			if($action == 'prev'){
-				$stack	= $session->get('stack' );
-				$id		= array_pop( $stack );
-				$session->set('stack', $stack);
-				$faucet	= $id ? $this->odb->find( $id ) : $this->odb->getFirstReadyFaucet();
-			}else{
-				$faucet	= $this->odb->getFirstReadyFaucet();
-			}
-
+		if($action == 'prev'){
+			$stack	= $session->get('stack' );
+			$id		= array_pop( $stack );
+			$session->set('stack', $stack);
+			$faucet	= $id ? $this->odb->find( $id ) : $this->odb->getFirstReadyFaucet();
+		}else{
+			$faucet	= $this->odb->getFirstReadyFaucet();
+		}
 
 		$count	= $this->odb->faucetCount();
 
@@ -118,7 +112,6 @@ class IndexController extends Controller{
 		$session = new Session(new NativeSessionStorage(), new AttributeBag());
 		$session->set('action', $action);
 
-
 		switch( $action ){
 
 			case 'next':
@@ -164,6 +157,13 @@ class IndexController extends Controller{
 				$session->set('order', $post['order']);
 				break;
 
+			case 'change_debt':
+				if( !$this->odb->updateDebt( $post ) ){
+					$json_ret	= [ 'success' => false, 'Message' => 'Faild updating debt value.', 'post' => $post ];
+					return new JsonResponse($json_ret);
+				}
+				break;
+
 			default:
 				$json_ret	= [ 'success' => false, 'Message' => 'Undefined action: '.$action ];
 				return new JsonResponse($json_ret);
@@ -173,6 +173,6 @@ class IndexController extends Controller{
 		$json_ret	= [ 'success' => true, 'post' => $post, 'Message' => 'Operation successful.' ];
 		return new JsonResponse($json_ret);
 	}
-//______________________________________________________________________________
+//______________________________________________________________________________ change_debt
 
 }//class end

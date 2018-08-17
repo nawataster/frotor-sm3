@@ -213,4 +213,12 @@ class FaucetRepository extends ServiceEntityRepository{
 	}
 //______________________________________________________________________________
 
+	public function updateDebt( $data ){
+		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
+		$faucet->setIsDebt( !(bool)$faucet->getIsDebt() );
+		$this->_em->flush();
+		return true;
+	}
+//______________________________________________________________________________
+
 }
