@@ -78,6 +78,7 @@ class FaucetRepository extends ServiceEntityRepository{
 		$faucet->setInfo( $form_data->getInfo() );
 		$faucet->setPriority( $form_data->getPriority() );
 		$faucet->setDuration( $form_data->getDuration() * 60 );
+		$faucet->setBanUntil( date_create_from_format('Y-m-d H:i:s', date('Y-m-d', strtotime('+'.$form_data->bandays.' day')).' 00:00:00' ) );
 
 		!(bool)$id ? $this->_em->persist($faucet):null;
 		$this->_em->flush();
