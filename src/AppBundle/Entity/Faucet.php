@@ -2,13 +2,17 @@
 
 namespace AppBundle\Entity;
 
+//				,indexes={name="url_query_ind", columns={"url", "query"}, unique=true}
+//
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Faucet
  *
- * @ORM\Table(name="faucets")
+ * @ORM\Table(name="faucets", uniqueConstraints={@ORM\UniqueConstraint(name="url_query_ind", columns={"url", "query"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FaucetRepository")
+
  */
 class Faucet
 {
@@ -24,7 +28,7 @@ class Faucet
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=100, unique=true)
+     * @ORM\Column(name="url", type="string", length=100)
      */
     private $url;
 
@@ -80,9 +84,16 @@ class Faucet
     /**
      * @var bool
      *
-     * @ORM\Column(name="is_debt", type="boolean")
+     * @ORM\Column(name="is_debt", type="boolean", options={"default" = false})
      */
     private $isDebt;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_tab", type="boolean", options={"default" = false})
+     */
+    private $isTab;
 
 
     /**
@@ -310,5 +321,30 @@ class Faucet
     {
         return $this->isDebt;
     }
+
+    /**
+     * Set isTab
+     *
+     * @param boolean $isTab
+     *
+     * @return Faucet
+     */
+    public function setIsTab($isTab)
+    {
+        $this->isTab = $isTab;
+
+        return $this;
+    }
+
+    /**
+     * Get isTab
+     *
+     * @return bool
+     */
+    public function getIsTab()
+    {
+        return $this->isTab;
+    }
+
 }
 

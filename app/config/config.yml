@@ -68,6 +68,20 @@ doctrine:
             datetime_functions:
                 timestamp_diff: AppBundle\Entity\DQL\TimestampDiff
 
+# Migrations Configuration
+doctrine_migrations:
+    dir_name: "%kernel.project_dir%/src/AppBundle/Migrations"
+    namespace: "AppBundle\\Migrations"
+    table_name: "migration_versions"
+#    column_name: "version"
+#    column_length: 14
+#    executed_at_column_name: "executed_at"
+    name: Application Migrations
+    organize_migrations: false # Version >= 1.2, possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
+    custom_template: ~ # Version >= 1.2, path to your custom migrations template
+#    all_or_nothing: false
+
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
