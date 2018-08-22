@@ -15,7 +15,7 @@ class FaucetForm extends FormType{
 	public function buildForm(FormBuilderInterface $builder, array $options){
 		$builder
 			->add('url', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Url' ] )
-			->add('info', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Description' ] )
+			->add('info', TextType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Description', 'required' => false ] )
 			->add('priority', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Priority' ] )
 			->add('duration', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Duration (мин)' ] )
 			->add('bandays', IntegerType::class, ['attr' => ['class'=> 'form-control'], 'label' => 'Days to ban' ] )
