@@ -49,35 +49,35 @@ class Faucet
     /**
      * @var int
      *
-     * @ORM\Column(name="duration", type="integer")
+     * @ORM\Column(name="duration", type="integer", options={"default" = 1800})
      */
     private $duration;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="until", type="datetime")
+     * @ORM\Column(name="until", type="datetime", options={"default" = "CURRENT_TIMESTAMP"})
      */
     private $until;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated", type="datetime", nullable=true)
+     * @ORM\Column(name="updated", type="datetime", options={"default" = "CURRENT_TIMESTAMP"})
      */
     private $updated;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="priority", type="integer")
+     * @ORM\Column(name="priority", type="integer", options={"default" = 1})
      */
     private $priority;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ban_until", type="datetime")
+     * @ORM\Column(name="ban_until", type="datetime", options={"default" = "CURRENT_TIMESTAMP"})
      */
     private $banUntil;
 
