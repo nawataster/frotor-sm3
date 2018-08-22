@@ -38,6 +38,7 @@ class IndexController extends Controller{
 		$session->set('action', 'init');
 
 		$stack	= $session->get('stack', []);
+
 		$session->set('stack', $stack);
 
 		if($action == 'prev'){
@@ -49,16 +50,14 @@ class IndexController extends Controller{
 			$faucet	= $this->odb->getFirstReadyFaucet();
 		}
 
-		$count	= $this->odb->faucetCount();
-
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
 			'faucet_id'	=> $faucet->getId()??0,
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
 	    	'order'		=> $session->get('order', 'desc'),
-	    	'count'		=> $count,
+	    	'count'		=> $this->odb->faucetCount(),
 			'action'	=> $action,
-			'is_prev_btn'	=> (bool)count($stack)
+			'is_first'	=> !(bool)count($stack)
         ]);
 	}
 //______________________________________________________________________________

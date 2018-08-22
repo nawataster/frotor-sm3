@@ -15,7 +15,7 @@
 			</div>
 		</td>
 
-		<td class="faucet-info-td"><div id="info" class="descr-txt">{{ faucet.info }}</div></td>
+		<td class="faucet-info-td"><div id="info" class="descr-txt">{{ faucet.info }}<span style="color: red; font-weight: bold;">{{ faucet.isTab ? ' * No frame *' : '' }}</span></div></td>
 
 		<td class="last-payout-txt">Last payout on <span id="last_pay">{{ last_pay }}</span></td>
 
@@ -58,7 +58,7 @@
 
 {% if faucet_id == null %}
 	{% set width = 100 %}
-{% elseif not is_prev_btn %}
+{% elseif is_first %}
 	{% set width = 170 %}
 {% else %}
 	{% set width = 200 %}
@@ -71,7 +71,7 @@
 {% if faucet.id %}
 				<button type="button" id="tomorrow_btn" class="btn btn-default glyphicon glyphicon-time" title="Bun till tomorrow"></button>
 				
-	{% if is_prev_btn %}
+	{% if not is_first %}
 				<button type="button" id="prev_btn" class="btn btn-default glyphicon glyphicon-backward" title="Previous faucet"></button>
 	{% endif %}
 				
@@ -102,6 +102,9 @@ $(document).ready(function(){
 	faucet_url = "{{ faucet.url }}";
 	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
 	action	= "{{ action }}";
+	is_tab	= {{ (faucet.isTab ? 'true' : 'false') }};
+	dummy_path	= "{{ path('showdummy') }}";
+	is_first	= {{ (is_first ? 'true' : 'false') }};
 
 	if(is_debt){
 		$(".panel-heading.index-heard").addClass("debt");
@@ -126,7 +129,7 @@ $(document).ready(function(){
 		switch( btn_id ){
 
 			case "load_btn":
-				loadFaucet(false);
+				loadFaucet( is_tab );
 				break;
 
 			case "new_tab_btn":
@@ -205,10 +208,10 @@ $(document).ready(function(){
 		}
 	});
  
-//console.log("action: "+action);
+//console.log("is_first: "+is_first);
 
-	if((action == "next" || action == "prev" || action == "tomorrow"))
-		loadFaucet(false);
+	if(action == "next" || action == "prev" || action == "tomorrow" || !is_first )
+		loadFaucet(is_tab);
 	
 });
 </script>

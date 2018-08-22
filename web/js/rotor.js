@@ -1,10 +1,9 @@
-/*var faucet_id=0, std_dlg
-	,faucet_url	= ""
+var action
+	,pdata
+	,is_tab		= false
+	,dummy_path
+	,is_first	= false
 ;
-
-*/
-
-var action, pdata;
 
 
 /**
@@ -73,6 +72,13 @@ function affirm( title, message, callback ){
 function loadFaucet( isNewTab ){
 	if( isNewTab ){
 		window.open( faucet_url, "_blank" );
+		$("#main_fraim").attr( "src", dummy_path );
+
+		$( "#load_btn" )
+			.removeClass( "glyphicon-repeat" )
+			.addClass( "glyphicon-play" )
+			.attr( "title","Show current faucet" );
+
 		return;
 	}
 
@@ -95,9 +101,6 @@ function processAction( url, fdata ){
 		dataType: "json",
 		data: fdata,
 		success: function( data, textStatus, jqXHR ) {
-
-//console.log(data);
-
 
 			if( !data.success ){
 				inform( "Warn", data.Message );

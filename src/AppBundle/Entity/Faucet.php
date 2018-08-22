@@ -2,9 +2,6 @@
 
 namespace AppBundle\Entity;
 
-//				,indexes={name="url_query_ind", columns={"url", "query"}, unique=true}
-//
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
