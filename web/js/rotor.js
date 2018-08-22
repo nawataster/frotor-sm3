@@ -1,7 +1,8 @@
 var action
 	,pdata
-	,is_tab = false
+	,is_tab		= false
 	,dummy_path
+	,is_first	= false
 ;
 
 
