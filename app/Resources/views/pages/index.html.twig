@@ -102,6 +102,7 @@ $(document).ready(function(){
 	faucet_url = "{{ faucet.url }}";
 	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
 	action	= "{{ action }}";
+	is_tab	= {{ (faucet.isTab ? 'true' : 'false') }};
 
 	if(is_debt){
 		$(".panel-heading.index-heard").addClass("debt");
@@ -126,7 +127,7 @@ $(document).ready(function(){
 		switch( btn_id ){
 
 			case "load_btn":
-				loadFaucet(false);
+				loadFaucet( is_tab );
 				break;
 
 			case "new_tab_btn":
@@ -208,7 +209,7 @@ $(document).ready(function(){
 //console.log("action: "+action);
 
 	if((action == "next" || action == "prev" || action == "tomorrow"))
-		loadFaucet(false);
+		loadFaucet(is_tab);
 	
 });
 </script>

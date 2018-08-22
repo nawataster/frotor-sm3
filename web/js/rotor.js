@@ -1,10 +1,7 @@
-/*var faucet_id=0, std_dlg
-	,faucet_url	= ""
+var action
+	,pdata
+	,is_tab = false
 ;
-
-*/
-
-var action, pdata;
 
 
 /**
