@@ -102,9 +102,6 @@ function processAction( url, fdata ){
 		data: fdata,
 		success: function( data, textStatus, jqXHR ) {
 
-//console.log(data);
-
-
 			if( !data.success ){
 				inform( "Warn", data.Message );
 				return false;
