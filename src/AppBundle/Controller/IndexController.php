@@ -49,6 +49,8 @@ class IndexController extends Controller{
 			$faucet	= $this->odb->getFirstReadyFaucet();
 		}
 
+		$info_suff	= $faucet->getIsTab() ? ' * No frame *' : '';
+
 		$count	= $this->odb->faucetCount();
 
 		return $this->render('pages/index.html.twig', [
@@ -58,7 +60,8 @@ class IndexController extends Controller{
 	    	'order'		=> $session->get('order', 'desc'),
 	    	'count'		=> $count,
 			'action'	=> $action,
-			'is_prev_btn'	=> (bool)count($stack)
+			'is_prev_btn'	=> (bool)count($stack),
+			'info_suff'		=> $info_suff
         ]);
 	}
 //______________________________________________________________________________
