@@ -1,6 +1,7 @@
 var action
 	,pdata
 	,is_tab = false
+	,dummy_path
 ;
 
 
@@ -70,6 +71,13 @@ function affirm( title, message, callback ){
 function loadFaucet( isNewTab ){
 	if( isNewTab ){
 		window.open( faucet_url, "_blank" );
+		$("#main_fraim").attr( "src", dummy_path );
+
+		$( "#load_btn" )
+			.removeClass( "glyphicon-repeat" )
+			.addClass( "glyphicon-play" )
+			.attr( "title","Show current faucet" );
+
 		return;
 	}
 

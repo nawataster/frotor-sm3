@@ -103,6 +103,7 @@ $(document).ready(function(){
 	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
 	action	= "{{ action }}";
 	is_tab	= {{ (faucet.isTab ? 'true' : 'false') }};
+	dummy_path	= "{{ path('showdummy') }}";
 
 	if(is_debt){
 		$(".panel-heading.index-heard").addClass("debt");
