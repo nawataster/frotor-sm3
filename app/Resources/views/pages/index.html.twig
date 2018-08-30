@@ -6,7 +6,7 @@
 	<div class="panel-heading index-heard {{ faucet.isDebt ? 'debt' : '' }}">
 <table class="main-tbl">
 	<tr>
-{% if faucet.id %}
+{% if faucet_id != 0 %}
 		<td class="faucet-id-td">
 			Id: <div class="badge" id="faucet_id">{{ faucet.id }}</div>
 			<div class="btn-group btn-group-xs" role="group" aria-label="Faucet id">
@@ -56,12 +56,12 @@
 			</table>
 		</td>
 
-{% if faucet_id == null %}
-	{% set width = 100 %}
+{% if faucet.id == null %}
+	{% set width = 134 %}
 {% elseif is_first %}
-	{% set width = 170 %}
-{% else %}
 	{% set width = 200 %}
+{% else %}
+	{% set width = 233 %}
 {% endif %}
 
 		<td class='tool-btn-td'>
@@ -69,7 +69,7 @@
 				<button type="button" id="selfaucet_btn" class="btn btn-default glyphicon glyphicon-tasks" title="Settings"></button>
 				<button type="button" id="settings_btn" class="btn btn-default glyphicon glyphicon-wrench" title="Settings"></button>
 				<button type="button" id="btn_reset" class="btn btn-default glyphicon glyphicon-refresh" title="Cancel all untils"></button>
-{% if faucet.id %}
+{% if faucet_id != 0 %}
 				<button type="button" id="tomorrow_btn" class="btn btn-default glyphicon glyphicon-time" title="Bun till tomorrow"></button>
 				
 	{% if not is_first %}

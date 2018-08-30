@@ -38,7 +38,6 @@ class IndexController extends Controller{
 		$session->set('action', 'init');
 
 		$stack	= $session->get('stack', []);
-
 		$session->set('stack', $stack);
 
 		if($action == 'prev'){
