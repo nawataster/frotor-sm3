@@ -112,11 +112,12 @@ class FaucetRepository extends ServiceEntityRepository{
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('fct')->from('AppBundle\Entity\Faucet', 'fct')
-			->where($qb->expr()->andX(
-				$qb->expr()->gte('timestamp_diff( SECOND, fct.until, CURRENT_TIMESTAMP())', 0)
-				,$qb->expr()->gte('timestamp_diff( SECOND, fct.banUntil, CURRENT_TIMESTAMP())', 0)
+			->where(
+				$qb->expr()->andX(
+					$qb->expr()->gte('timestamp_diff( SECOND, fct.until, CURRENT_TIMESTAMP())', 0),
+					$qb->expr()->gte('timestamp_diff( SECOND, fct.banUntil, CURRENT_TIMESTAMP())', 0)
+				)
 			)
-		)
 		;
 
 		return $qb;
@@ -219,6 +220,58 @@ class FaucetRepository extends ServiceEntityRepository{
 		$faucet->setIsDebt( !(bool)$faucet->getIsDebt() );
 		$this->_em->flush();
 		return true;
+	}
+//______________________________________________________________________________
+
+	public function processFaucet( $faucet ){
+
+		if( !is_array($faucet) )
+			return $faucet;
+
+			foreach( $faucet as $key=>$value ){
+				if( (string)$key == '0' ){
+					$res_faucet	= $value;
+				}else{
+					$res_faucet->{$key}	= $value;
+				}
+			}
+
+
+		return $res_faucet;
+
+	}
+//______________________________________________________________________________
+
+	public function getFaucetsInfo(){
+
+		$qb = $this->_em->createQueryBuilder();
+		$faucets	= $qb
+			->select('fct,'.
+					'(2 + 2) AS dummy '.
+// 					',timestamp_diff( SECOND,fct.until, CURRENT_TIMESTAMP()) AS until_status'.
+// 					',timestamp_diff( SECOND, fct.banUntil, CURRENT_TIMESTAMP()) AS ban_until_status'.
+					',IF(timestamp_diff( SECOND, fct.until, CURRENT_TIMESTAMP()) < 0, true, false) AS is_leter'.
+					',IF(timestamp_diff( SECOND, fct.banUntil, CURRENT_TIMESTAMP()) < 0, true, false) AS is_ban'.
+
+					'')
+			->from('AppBundle\Entity\Faucet', 'fct')
+
+// 			->where(
+// 				$qb->expr()->andX(
+// // 					$qb->expr()->eq('1', 1)
+// // 					,$qb->expr()->gte('timestamp_diff( SECOND, fct.until, CURRENT_TIMESTAMP())', 0)
+// // 					,$qb->expr()->gte('timestamp_diff( SECOND, fct.banUntil, CURRENT_TIMESTAMP())', 0)
+// 				)
+// 			)
+
+
+			->getQuery()->getResult();
+
+		foreach( $faucets as &$faucet ){
+			$faucet	= $this->processFaucet( $faucet );
+		}
+
+		return $faucets;
 	}
 //______________________________________________________________________________
 

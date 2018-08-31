@@ -49,6 +49,8 @@ class IndexController extends Controller{
 			$faucet	= $this->odb->getFirstReadyFaucet();
 		}
 
+		$faucets	= $this->odb->getFaucetsInfo();
+
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
 			'faucet_id'	=> $faucet->getId()??0,
@@ -57,6 +59,7 @@ class IndexController extends Controller{
 	    	'count'		=> $this->odb->faucetCount(),
 			'action'	=> $action,
 			'is_first'	=> !(bool)count($stack)
+			,'faucets'	=> $faucets
         ]);
 	}
 //______________________________________________________________________________

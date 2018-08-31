@@ -63,6 +63,8 @@ doctrine:
         auto_mapping: true
         
         dql:
+            string_functions:
+                if: AppBundle\Entity\DQL\IFF   # IF(exp1, exp2, exp3) - MySQL function.
             numeric_functions:
                 rand: AppBundle\Entity\DQL\Rand
             datetime_functions:
