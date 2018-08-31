@@ -6,7 +6,7 @@
 	<div class="panel-heading index-heard {{ faucet.isDebt ? 'debt' : '' }}">
 <table class="main-tbl">
 	<tr>
-{% if faucet.id %}
+{% if faucet_id != 0 %}
 		<td class="faucet-id-td">
 			Id: <div class="badge" id="faucet_id">{{ faucet.id }}</div>
 			<div class="btn-group btn-group-xs" role="group" aria-label="Faucet id">
@@ -56,19 +56,20 @@
 			</table>
 		</td>
 
-{% if faucet_id == null %}
-	{% set width = 100 %}
+{% if faucet.id == null %}
+	{% set width = 134 %}
 {% elseif is_first %}
-	{% set width = 170 %}
-{% else %}
 	{% set width = 200 %}
+{% else %}
+	{% set width = 233 %}
 {% endif %}
 
 		<td class='tool-btn-td'>
 			<div class="btn-group btn-group-sm pull-right" style="width: {{ width }}px;" role="group" aria-label="Faucet manipulate">
+				<button type="button" id="selfaucet_btn" class="btn btn-default glyphicon glyphicon-list-alt dialog" title="Faucet list"></button>
 				<button type="button" id="settings_btn" class="btn btn-default glyphicon glyphicon-wrench" title="Settings"></button>
 				<button type="button" id="btn_reset" class="btn btn-default glyphicon glyphicon-refresh" title="Cancel all untils"></button>
-{% if faucet.id %}
+{% if faucet_id != 0 %}
 				<button type="button" id="tomorrow_btn" class="btn btn-default glyphicon glyphicon-time" title="Bun till tomorrow"></button>
 				
 	{% if not is_first %}
@@ -89,22 +90,22 @@
 	   <iframe id="main_fraim" class="main-fraim" src="{{ path('showdummy') }}"></iframe>
 	</div>
 </div>
+
+{{ include('blocks/faucet-list-modal.twig') }}
+
 {% endblock %}
 
 {% block javascripts %}
 <script type="text/javascript">
 $(document).ready(function(){
 
-	var btn_id
+	var action	= "{{ action }}"
+		,is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }}
+		,is_tab	= {{ (faucet.isTab ? 'true' : 'false') }}
+		,is_first	= {{ (is_first ? 'true' : 'false') }}
 	;
-
-	faucet_id = {{ faucet_id }};
-	faucet_url = "{{ faucet.url }}";
-	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
-	action	= "{{ action }}";
-	is_tab	= {{ (faucet.isTab ? 'true' : 'false') }};
+	
 	dummy_path	= "{{ path('showdummy') }}";
-	is_first	= {{ (is_first ? 'true' : 'false') }};
 
 	if(is_debt){
 		$(".panel-heading.index-heard").addClass("debt");
@@ -114,26 +115,27 @@ $(document).ready(function(){
 		$("#debt_btn").attr("title","Set debt status");
 	}
 
-	$("button").click(function(ev){
+	$("div.main-panel-content button").click(function(ev){
+		
+		var btn_id
+    		,pdata	= {
+    			"id": {{ faucet_id }},
+    			"priority":	$("#priority").val(),
+    			"cduration": $("#cduration").val(),
+    			"oduration": $("#oduration").val(),
+    			"order": $("#order").val()
+    		};
 
 		btn_id	= $(this).attr("id");
-		
-		pdata	= {
-			"id": {{ faucet_id }},
-			"priority":	$("#priority").val(),
-			"cduration": $("#cduration").val(),
-			"oduration": $("#oduration").val(),
-			"order": $("#order").val()
-		};
 
 		switch( btn_id ){
 
 			case "load_btn":
-				loadFaucet( is_tab );
+				loadFaucet( "{{ faucet.url }}",is_tab );
 				break;
 
 			case "new_tab_btn":
-				loadFaucet(true);
+				loadFaucet("{{ faucet.url }}",true);
 				break;
 
 			case "settings_btn":
@@ -201,6 +203,10 @@ $(document).ready(function(){
 				pdata.url	= '{{ path('showindex') }}';
 				processAction( "{{ path('postindex', {action: 'change_debt'}) }}", pdata );
 				break;
+				
+			case "selfaucet_btn":
+				showFaucetListModal();
+				break;
 
 			default:
 				alert("Undefind button (link). Button id: "+btn_id);
@@ -208,10 +214,10 @@ $(document).ready(function(){
 		}
 	});
  
-//console.log("is_first: "+is_first);
+//console.log("aaaa: "+aaaa);
 
 	if(action == "next" || action == "prev" || action == "tomorrow" || !is_first )
-		loadFaucet(is_tab);
+		loadFaucet("{{ faucet.url }}", is_tab);
 	
 });
 </script>

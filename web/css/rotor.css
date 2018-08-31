@@ -225,3 +225,12 @@ ul.time-units li{
 ul.time-units li:HOVER {
 	background-color: #ebebeb;
 }
+div.modal-dialog div.modal-content div.modal-body div.list-group{
+	max-height: 600px; overflow-y: auto;
+}
+div.modal-dialog div.modal-content div.modal-body div.list-group a.list-group-item{
+	padding-top: 0; padding-bottom: 0;
+}
+div.modal-dialog div.modal-content div.modal-footer{
+	margin-top: 0;
+}

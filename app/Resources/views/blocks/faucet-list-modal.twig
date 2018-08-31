@@ -1,0 +1,24 @@
+{% extends 'blocks/base-modal.twig' %}
+{% set modal_title = 'Faucets list' %}
+{% set modal_id = 'faucets_list_modal' %}
+
+{% block modalcontent %}
+
+<div class="list-group">
+
+    {% for faucet in faucets %}
+        {% if faucet.is_ban %}
+        	{% set bg_color_css = 'list-group-item-danger' %}
+        {% elseif faucet.is_time %}
+        	{% set bg_color_css = 'list-group-item-success' %}
+        {% else %}
+        	{% set bg_color_css = 'list-group-item-warning' %}
+        {% endif %}
+    
+    	<a href="#" onclick="processAction( '{{ path('postindex', {action: 'select'}) }}', {id: {{ faucet.id }}, url: '{{ path('showindex') }}'}  )" class="list-group-item {{ bg_color_css }}"><span>{{ faucet.id }} / </span>{{ faucet.info }}</a>
+
+	{% endfor %}
+	
+</div>
+
+{% endblock %}

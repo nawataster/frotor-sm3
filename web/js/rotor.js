@@ -1,6 +1,4 @@
-var action
-	,pdata
-	,is_tab		= false
+var is_tab		= false
 	,dummy_path
 	,is_first	= false
 ;
@@ -69,7 +67,7 @@ function affirm( title, message, callback ){
 }
 //______________________________________________________________________________
 
-function loadFaucet( isNewTab ){
+function loadFaucet( faucet_url, isNewTab ){
 	if( isNewTab ){
 		window.open( faucet_url, "_blank" );
 		$("#main_fraim").attr( "src", dummy_path );
@@ -109,7 +107,7 @@ function processAction( url, fdata ){
 
 			if( data.post.action == "save_duration" ){
 				inform( "Operation result", data.Message );
-				$("#oduration").val(pdata.cduration);
+				$("#oduration").val(data.post.cduration);
 				return false;
 			}
 
@@ -122,6 +120,11 @@ function processAction( url, fdata ){
 	});
 }
 //______________________________________________________________________________
+
+
+function showFaucetListModal(){
+	$('#faucets_list_modal').modal('show')
+}
 
 $(document).ready(function(){
 

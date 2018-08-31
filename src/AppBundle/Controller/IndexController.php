@@ -38,7 +38,6 @@ class IndexController extends Controller{
 		$session->set('action', 'init');
 
 		$stack	= $session->get('stack', []);
-
 		$session->set('stack', $stack);
 
 		if($action == 'prev'){
@@ -46,9 +45,14 @@ class IndexController extends Controller{
 			$id		= array_pop( $stack );
 			$session->set('stack', $stack);
 			$faucet	= $id ? $this->odb->find( $id ) : $this->odb->getFirstReadyFaucet();
+		}elseif($action == 'select'){
+			$id = $session->get('id');
+			$faucet	= $this->odb->find( $id );
 		}else{
 			$faucet	= $this->odb->getFirstReadyFaucet();
 		}
+
+		$faucets	= $this->odb->getFaucetsInfo();
 
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
@@ -58,6 +62,7 @@ class IndexController extends Controller{
 	    	'count'		=> $this->odb->faucetCount(),
 			'action'	=> $action,
 			'is_first'	=> !(bool)count($stack)
+			,'faucets'	=> $faucets
         ]);
 	}
 //______________________________________________________________________________
@@ -131,6 +136,10 @@ class IndexController extends Controller{
 				}
 				break;
 
+			case 'select':
+				$session->set('id', $post['id']);
+				break;
+
 			case 'reset':
 				if( $this->odb->resetAll( $post ) < 0 ){
 					$json_ret	= [ 'success' => false, 'Message' => 'Faild resetting all faucetse.', 'post' => $post ];
@@ -169,6 +178,7 @@ class IndexController extends Controller{
 		}
 
 		$post['action']	= $action;
+
 		$json_ret	= [ 'success' => true, 'post' => $post, 'Message' => 'Operation successful.' ];
 		return new JsonResponse($json_ret);
 	}
