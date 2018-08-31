@@ -248,12 +248,12 @@ class FaucetRepository extends ServiceEntityRepository{
 		$faucets	= $qb
 			->select('fct,'.
 					'(2 + 2) AS dummy '.
-					',IF(timestamp_diff( SECOND, fct.until, CURRENT_TIMESTAMP()) < 0, true, false) AS is_leter'.
+					',IF(timestamp_diff( SECOND, fct.until, CURRENT_TIMESTAMP()) < 0, false, true) AS is_time'.
 					',IF(timestamp_diff( SECOND, fct.banUntil, CURRENT_TIMESTAMP()) < 0, true, false) AS is_ban'.
 					'')
 			->from('AppBundle\Entity\Faucet', 'fct')
 			->orderBy('fct.info')
-// 			->setMaxResults(5)
+// 			->setMaxResults(1)
 			->getQuery()->getResult();
 
 		foreach( $faucets as &$faucet ){
