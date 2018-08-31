@@ -99,16 +99,13 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	var btn_id
+	var action	= "{{ action }}"
+		,is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }}
+		,is_tab	= {{ (faucet.isTab ? 'true' : 'false') }}
+		,is_first	= {{ (is_first ? 'true' : 'false') }}
 	;
-
-	faucet_id = {{ faucet_id }};
-	faucet_url = "{{ faucet.url }}";
-	is_debt	= {{ (faucet.isDebt ? 'true' : 'false') }};
-	action	= "{{ action }}";
-	is_tab	= {{ (faucet.isTab ? 'true' : 'false') }};
+	
 	dummy_path	= "{{ path('showdummy') }}";
-	is_first	= {{ (is_first ? 'true' : 'false') }};
 
 	if(is_debt){
 		$(".panel-heading.index-heard").addClass("debt");
@@ -119,25 +116,26 @@ $(document).ready(function(){
 	}
 
 	$("div.main-panel-content button").click(function(ev){
+		
+		var btn_id
+    		,pdata	= {
+    			"id": {{ faucet_id }},
+    			"priority":	$("#priority").val(),
+    			"cduration": $("#cduration").val(),
+    			"oduration": $("#oduration").val(),
+    			"order": $("#order").val()
+    		};
 
 		btn_id	= $(this).attr("id");
-		
-		pdata	= {
-			"id": {{ faucet_id }},
-			"priority":	$("#priority").val(),
-			"cduration": $("#cduration").val(),
-			"oduration": $("#oduration").val(),
-			"order": $("#order").val()
-		};
 
 		switch( btn_id ){
 
 			case "load_btn":
-				loadFaucet( is_tab );
+				loadFaucet( "{{ faucet.url }}",is_tab );
 				break;
 
 			case "new_tab_btn":
-				loadFaucet(true);
+				loadFaucet("{{ faucet.url }}",true);
 				break;
 
 			case "settings_btn":
@@ -216,10 +214,10 @@ $(document).ready(function(){
 		}
 	});
  
-//console.log("is_first: "+is_first);
+//console.log("aaaa: "+aaaa);
 
 	if(action == "next" || action == "prev" || action == "tomorrow" || !is_first )
-		loadFaucet(is_tab);
+		loadFaucet("{{ faucet.url }}", is_tab);
 	
 });
 </script>
