@@ -123,6 +123,11 @@ function processAction( url, fdata ){
 }
 //______________________________________________________________________________
 
+
+function showFaucetListModal(){
+	$('#modal_dialog').modal('show')
+}
+
 $(document).ready(function(){
 
 	$.ajaxSetup({

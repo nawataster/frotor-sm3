@@ -1,0 +1,10 @@
+{% extends 'blocks/base-modal.twig' %}
+{% set modal_title = 'Faucets list' %}
+
+{% block modalcontent %}
+<div class="list-group">
+    {% for faucet in faucets %}
+    	<a href="#" class="list-group-item"><span>{{ faucet.id }} / </span>{{ faucet.info }}</a>
+	{% endfor %}
+</div>
+{% endblock %}
