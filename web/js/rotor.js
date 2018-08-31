@@ -125,7 +125,7 @@ function processAction( url, fdata ){
 
 
 function showFaucetListModal(){
-	$('#modal_dialog').modal('show')
+	$('#faucets_list_modal').modal('show')
 }
 
 $(document).ready(function(){
