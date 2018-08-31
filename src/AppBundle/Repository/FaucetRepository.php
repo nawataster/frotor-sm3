@@ -252,6 +252,7 @@ class FaucetRepository extends ServiceEntityRepository{
 					',IF(timestamp_diff( SECOND, fct.banUntil, CURRENT_TIMESTAMP()) < 0, true, false) AS is_ban'.
 					'')
 			->from('AppBundle\Entity\Faucet', 'fct')
+			->orderBy('fct.info')
 // 			->setMaxResults(5)
 			->getQuery()->getResult();
 
