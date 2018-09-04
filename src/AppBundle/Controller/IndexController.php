@@ -54,6 +54,15 @@ class IndexController extends Controller{
 
 		$faucets	= $this->odb->getFaucetsInfo();
 
+
+$dummy_faucet	= $this->odb->getNullFaucet();
+$dummy_faucet->setId(12);
+$dummy_faucet->is_ban	= false;
+$dummy_faucet->is_time	= true;
+$dummy_faucet->setInfo('Dummy Dummy Dummy Dummy Dummy Dummy');
+$faucets[]	= $dummy_faucet;
+// $this->container->get('logger')->info( "Id: ".$dummy_faucet->getId(), ['dir'=>__FILE__]);
+
 		return $this->render('pages/index.html.twig', [
 			'faucet'	=> $faucet,
 			'faucet_id'	=> $faucet->getId()??0,
