@@ -103,32 +103,6 @@ class Faucet
         return $this->id;
     }
 
-
-
-
-
-
-
-    /**
-     * Set id		//XXX: Debug!!!
-     *
-     * @param int $id
-     *
-     * @return Faucet
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-
-
-
-
-
-
     /**
      * Set url
      *
