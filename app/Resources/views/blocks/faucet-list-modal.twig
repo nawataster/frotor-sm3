@@ -5,9 +5,6 @@
 {% block modalcontent %}
 
 <div class="list-group">
-
-
-
 	<div class="container-fluid">
 
     {% for faucet in faucets %}
@@ -19,12 +16,6 @@
         	{% set bg_color_css = 'list-group-item-warning' %}
         {% endif %}
     
-    
-{#
-    	<a href="#" onclick="processAction( '{{ path('postindex', {action: 'select'}) }}', {id: {{ faucet.id }}, url: '{{ path('showindex') }}'}  )" class="list-group-item {{ bg_color_css }}">
-    		<span style="width: 50px;">{{ faucet.id }} / </span>{{ faucet.info }}
-    	</a>
-#}
     	
     	<div class="col-xs-1">
     		{{ faucet.id }}
@@ -35,19 +26,9 @@
         		{{ faucet.info }}
         	</a>
     	</div>
-    	
-    	
-    	
-    	
-    	
-    	
 	{% endfor %}
 	
-	
 	</div>
-	
-	
-	
 </div>
 
 {% endblock %}

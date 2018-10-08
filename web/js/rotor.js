@@ -1,6 +1,4 @@
-var is_tab		= false
-	,dummy_path
-	,is_first	= false
+var dummy_path
 ;
 
 
