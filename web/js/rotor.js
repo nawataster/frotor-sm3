@@ -119,10 +119,10 @@ function processAction( url, fdata ){
 }
 //______________________________________________________________________________
 
-
 function showFaucetListModal(){
 	$('#faucets_list_modal').modal('show')
 }
+//______________________________________________________________________________
 
 $(document).ready(function(){
 

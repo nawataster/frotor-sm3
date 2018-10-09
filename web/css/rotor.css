@@ -234,3 +234,10 @@ div.modal-dialog div.modal-content div.modal-body div.list-group a.list-group-it
 div.modal-dialog div.modal-content div.modal-footer{
 	margin-top: 0;
 }
+div.panel div.panel-body div.row div.list-options{
+	text-align: left;
+}
+
+div.panel div.panel-body div.row div.list-options.opt-title{
+	font-weight: bold;
+}
