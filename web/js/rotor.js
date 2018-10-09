@@ -117,10 +117,18 @@ function processAction( url, fdata ){
 		}
 	});
 }
-//______________________________________________________________________________
+//______________________________________________________________________________ $(this).attr("id")
 
 function showFaucetListModal(){
 	$('#faucets_list_modal').modal('show')
+
+
+
+	$(".faucet-list-opt").click(function(ev){
+		var ind = $(this).attr("name")+"_"+$(this).val();
+
+		alert("List option: "+ind);
+	});
 }
 //______________________________________________________________________________
 
