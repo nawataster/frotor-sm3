@@ -1,4 +1,9 @@
 var dummy_path
+	,list_opts = {
+	 "info":"desc",
+	 "sort":"id"
+	}
+	,list_path
 ;
 
 
@@ -120,14 +125,21 @@ function processAction( url, fdata ){
 //______________________________________________________________________________ $(this).attr("id")
 
 function showFaucetListModal(){
-	$('#faucets_list_modal').modal('show')
-
-
+	$('#faucets_list_modal').modal('show');
 
 	$(".faucet-list-opt").click(function(ev){
 		var ind = $(this).attr("name")+"_"+$(this).val();
 
-		alert("List option: "+ind);
+		$(this).attr("name") == "info" ? list_opts.info = $(this).val() : list_opts.sort = $(this).val();
+
+		$.ajax({
+			url: list_path,
+	        type: "POST",
+			dataType: "json",
+	        success: function(content) {
+	        	$("div#faucets_list_modal div.modal-body").html(content);
+	        }
+	    });
 	});
 }
 //______________________________________________________________________________

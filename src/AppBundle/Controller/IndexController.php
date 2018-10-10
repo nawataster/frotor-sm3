@@ -3,6 +3,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 // use Symfony\Component\HttpFoundation\Response;
 // use Psr\Log\LoggerInterface;
@@ -183,5 +184,14 @@ class IndexController extends Controller{
 		return new JsonResponse($json_ret);
 	}
 //______________________________________________________________________________ change_debt
+
+	public function faucetListAction(  Request $request  ){
+		$faucets	= $this->odb->getFaucetsInfo();
+
+		$content	= $this->render('blocks/faucet-list-content.twig', ['faucets' => $faucets])->getContent();
+
+		return new JsonResponse($content);
+	}
+//______________________________________________________________________________
 
 }//class end

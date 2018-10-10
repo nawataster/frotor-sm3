@@ -23,4 +23,8 @@ postindex:
     defaults: { _controller: AppBundle:Index:postIndex, action: 'undefined' }
     requirements:
         action: '\w+'
+        
+faucetlist:
+    path: /faucetlist
+    defaults: { _controller: AppBundle:Index:faucetList }    
     

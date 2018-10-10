@@ -3,57 +3,5 @@
 {% set modal_id = 'faucets_list_modal' %}
 
 {% block modalcontent %}
-
-<div class="list-group">
-	<div class="container-fluid">
-
-    {% for faucet in faucets %}
-        {% if faucet.is_ban %}
-        	{% set bg_color_css = 'list-group-item-danger' %}
-        {% elseif faucet.is_time %}
-        	{% set bg_color_css = 'list-group-item-success' %}
-        {% else %}
-        	{% set bg_color_css = 'list-group-item-warning' %}
-        {% endif %}
-    
-    	<div class="row">
-        	<div class="col-xs-1">{{ faucet.id }}</div>
-        	
-        	<div class="col-xs-11">
-            	<a href="#" onclick="processAction('{{ path('postindex', {action: 'select'}) }}', {id: {{ faucet.id }}, url: '{{ path('showindex') }}'})" class="list-group-item {{ bg_color_css }}">
-            		{{ faucet.info }}
-            	</a>
-        	</div>
-    	</div>
-	{% endfor %}
-	
-	</div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-body">
-    
-        <div class="row">
-        	<div class="col-xs-4 list-options opt-title">Show text:</div>
-        	
-        	<div class="col-xs-2 list-options">Decription</div>
-        	<div class="col-xs-2 list-options"><input class="faucet-list-opt" type="radio" name="info" value="desc" /></div>
-        	
-        	<div class="col-xs-1 list-options">Url</div>
-            <div class="col-xs-1 list-options"><input class="faucet-list-opt" type="radio" name="info" value="url" /></div>
-        </div>
-        
-        <div class="row">
-        	<div class="col-xs-4 list-options opt-title">Sort by:</div>
-        	
-        	<div class="col-xs-2 list-options">Id</div>
-        	<div class="col-xs-2 list-options"><input class="faucet-list-opt" type="radio" name="sort" value="id" /></div>
-
-        	<div class="col-xs-1 list-options">Info</div>
-            <div class="col-xs-1 list-options"><input class="faucet-list-opt" type="radio" name="sort" value="info" /></div>
-        </div>
-    
-    </div>
-</div>
-
+{% include 'blocks/faucet-list-content.twig' with {'faucets': faucets} %}
 {% endblock %}
