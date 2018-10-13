@@ -128,7 +128,17 @@ function showFaucetListModal(){
 	$('#faucets_list_modal').modal('show');
 
 	$(".faucet-list-opt").click(function(ev){
-		var ind = $(this).attr("name")+"_"+$(this).val();
+		var ind = $(this).attr("name")+"_"+$(this).val()
+
+		,dtt	= {
+			"info":$("[name=info]").val(),
+			"sort":$("[name=sort]").val()
+		}
+	;
+
+
+alert(111);
+//debugger;
 
 		$(this).attr("name") == "info" ? list_opts.info = $(this).val() : list_opts.sort = $(this).val();
 
@@ -136,6 +146,7 @@ function showFaucetListModal(){
 			url: list_path,
 	        type: "POST",
 			dataType: "json",
+			data: "",
 	        success: function(content) {
 	        	$("div#faucets_list_modal div.modal-body").html(content);
 	        }
