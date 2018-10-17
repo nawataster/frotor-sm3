@@ -188,7 +188,7 @@ class IndexController extends Controller{
 	public function faucetListAction(  Request $request  ){
 		$faucets	= $this->odb->getFaucetsInfo();
 
-		$content	= $this->render('blocks/faucet-list-content.twig', ['faucets' => $faucets])->getContent();
+		$content	= $this->render('blocks/faucet-list/content.twig', ['faucets' => $faucets])->getContent();
 
 		return new JsonResponse($content);
 	}
