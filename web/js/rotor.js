@@ -4,6 +4,7 @@ var dummy_path
 	 "sort":"id"
 	}
 	,list_path
+	,mmm=1
 ;
 
 
@@ -124,11 +125,9 @@ function processAction( url, fdata ){
 }
 //______________________________________________________________________________ $(this).attr("id")
 
-function showFaucetListModal(){
-	$('#faucets_list_modal').modal('show');
 
-	$(".faucet-list-opt").click(function(ev){
-		var ind = $(this).attr("name")+"_"+$(this).val()
+function processOptSelect(ev,that){
+		var ind = that.attr("name")+"_"+that.val()
 
 		,dtt	= {
 			"info":$("[name=info]").val(),
@@ -137,10 +136,10 @@ function showFaucetListModal(){
 	;
 
 
-alert(111);
+//alert("list_path: "+ind);
 //debugger;
 
-		$(this).attr("name") == "info" ? list_opts.info = $(this).val() : list_opts.sort = $(this).val();
+		that.attr("name") == "info" ? list_opts.info = that.val() : list_opts.sort = that.val();
 
 		$.ajax({
 			url: list_path,
@@ -149,9 +148,16 @@ alert(111);
 			data: "",
 	        success: function(content) {
 	        	$("div#faucets_list_modal div.modal-body").html(content);
+	        	$(".faucet-list-opt").click(function(ev){processOptSelect(ev,$(this));});
 	        }
 	    });
-	});
+
+}
+
+function showFaucetListModal(){
+	$('#faucets_list_modal').modal('show');
+
+	$(".faucet-list-opt").click(function(ev){processOptSelect(ev,$(this));});
 }
 //______________________________________________________________________________
 
