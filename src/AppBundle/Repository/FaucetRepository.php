@@ -198,7 +198,10 @@ class FaucetRepository extends ServiceEntityRepository{
 	public function updateUntilTomorrow( $data ){
 		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
 
-		$faucet->setUntil( new DateTime('+1 day') );
+		$dt	= new DateTime('+1 day');
+		$dt->setTime(0, 0, 1);
+
+		$faucet->setUntil( $dt );
 		$faucet->setIsDebt( true );
 		$faucet->setPriority( $data['priority'] );		//Priority is updated for comfort
 
