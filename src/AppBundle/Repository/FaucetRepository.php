@@ -23,9 +23,9 @@ class FaucetRepository extends ServiceEntityRepository{
 	private $lg;
 
 	public function __construct( RegistryInterface $registry, LoggerInterface $logger ){
-        parent::__construct($registry, Faucet::class);
-        $this->lg	= $logger;
-    }
+		parent::__construct($registry, Faucet::class);
+		$this->lg	= $logger;
+	}
 
 	public function getNullFaucet(){
 		$faucet	= new Faucet();
@@ -52,17 +52,17 @@ class FaucetRepository extends ServiceEntityRepository{
 	}
 //______________________________________________________________________________
 
-    private static function prepareUrl( $form_data ){
-    	$url	= $form_data->getUrl();
+	private static function prepareUrl( $form_data ){
+		$url	= $form_data->getUrl();
 
-    	$query	= parse_url( $url, PHP_URL_QUERY );
+		$query	= parse_url( $url, PHP_URL_QUERY );
 		$url	= parse_url( $url, PHP_URL_SCHEME ).'://'.parse_url( $url, PHP_URL_HOST ).parse_url( $url, PHP_URL_PATH );
 
 		$form_data->setUrl( $url );
 		$form_data->setQuery( $query );
 
-    	return $form_data;
-    }
+		return $form_data;
+	}
 //______________________________________________________________________________
 
 	public function saveFaucet( $id, $form_data ){
@@ -89,9 +89,9 @@ class FaucetRepository extends ServiceEntityRepository{
 //______________________________________________________________________________
 
 	private static function applyTimeUnit( $faucet ){
-    	$duration = $faucet->getDuration() / 60;
-    	$faucet->setDuration($duration);
-    	return $faucet;
+		$duration = $faucet->getDuration() / 60;
+		$faucet->setDuration($duration);
+		return $faucet;
 	}
 //______________________________________________________________________________
 
@@ -176,14 +176,14 @@ class FaucetRepository extends ServiceEntityRepository{
 			$query	= $qb
 				->update( Faucet::class, 'f' )
 				->set( 'f.until', '?1' )
-	        	->where('f.until > ?2')
+				->where('f.until > ?2')
 
-	        	->setParameter(1, $date)
-	        	->setParameter(2, $date)
+				->setParameter(1, $date)
+				->setParameter(2, $date)
 
 				->getQuery();
 
-//	 			$sql	= $query->getSQL();				//XXX: Left for information.
+//				$sql	= $query->getSQL();				//XXX: Left for information.
 
 			$res	= $query->execute();
 
@@ -198,10 +198,10 @@ class FaucetRepository extends ServiceEntityRepository{
 	public function updateUntilTomorrow( $data ){
 		$faucet	= $this->_em->getRepository(Faucet::class)->find( $data['id'] );
 
-		$dt	= new DateTime('+1 day');
-		$dt->setTime(0, 0, 1);
+		$until_dt	= new DateTime('+1 day');
+		$until_dt->setTime(0, 0, 1);
 
-		$faucet->setUntil( $dt );
+		$faucet->setUntil( $until_dt );
 		$faucet->setIsDebt( true );
 		$faucet->setPriority( $data['priority'] );		//Priority is updated for comfort
 

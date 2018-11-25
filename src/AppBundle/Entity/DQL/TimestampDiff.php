@@ -44,7 +44,7 @@ class TimestampDiff extends FunctionNode{
 			$this->dtUnit . ', ' .
 			$this->dtPar1->dispatch($sqlWalker) . ', ' .
 			$this->dtPar2->dispatch($sqlWalker) .
-        ')';
+		')';
 	}
 //______________________________________________________________________________
 }// Class end

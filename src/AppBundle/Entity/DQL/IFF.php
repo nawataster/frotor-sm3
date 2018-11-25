@@ -28,7 +28,7 @@ class IFF extends FunctionNode{
 			$this->exp1->dispatch($sqlWalker) . ', ' .
 			$this->exp2->dispatch($sqlWalker) . ', ' .
 			$this->exp3->dispatch($sqlWalker).
-        ')';
+		')';
 	}
 //______________________________________________________________________________
 }// Class end

@@ -5,7 +5,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
-// use Symfony\Component\HttpFoundation\Response;
 // use Psr\Log\LoggerInterface;
 use AppBundle\Entity\Faucet;
 use AppBundle\Form\FaucetForm;
@@ -59,12 +58,12 @@ class IndexController extends Controller{
 			'faucet'	=> $faucet,
 			'faucet_id'	=> $faucet->getId()??0,
 			'last_pay'	=> self::getLastPayInfo( $faucet ),
-	    	'order'		=> $session->get('order', 'desc'),
-	    	'count'		=> $this->odb->faucetCount(),
+			'order'		=> $session->get('order', 'desc'),
+			'count'		=> $this->odb->faucetCount(),
 			'action'	=> $action,
 			'is_first'	=> !(bool)count($stack)
 			,'faucets'	=> $faucets
-        ]);
+		]);
 	}
 //______________________________________________________________________________
 
@@ -88,7 +87,7 @@ class IndexController extends Controller{
 
 		$message	= '';
 		if( $form->isSubmitted() && $form->isValid() ){
-			$form_data = $form->getData();
+			$form_data	= $form->getData();
 			$message	= $this->odb->saveFaucet( $faucet->getId(), $form_data )
 				? 'Data have been successfully saved.'
 				: 'Data saving has been failed.';
@@ -183,7 +182,7 @@ class IndexController extends Controller{
 		$json_ret	= [ 'success' => true, 'post' => $post, 'Message' => 'Operation successful.' ];
 		return new JsonResponse($json_ret);
 	}
-//______________________________________________________________________________ change_debt
+//______________________________________________________________________________
 
 	public function faucetListAction(  Request $request  ){
 		$faucets	= $this->odb->getFaucetsInfo();
