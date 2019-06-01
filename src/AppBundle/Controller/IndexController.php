@@ -52,6 +52,10 @@ class IndexController extends Controller{
 			$faucet	= $this->odb->getFirstReadyFaucet();
 		}
 
+		$query	= $faucet->getQuery();
+		$query	= empty($query) ? '' : '?'.$query;
+		$faucet->setUrl( $faucet->getUrl().$query );
+
 		$faucets	= $this->odb->getFaucetsInfo();
 
 		return $this->render('pages/index.html.twig', [
